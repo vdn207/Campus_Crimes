@@ -1,0 +1,24 @@
+import numpy as np 
+import pandas as pd 
+import matplotlib.pyplot as plt 
+import handlers
+import college
+
+class Graphs(dict, obj College):
+
+	
+	def __init__(self, crimes, College):
+		self.crimes=crimes
+		self.collegeInfo=collegeInfo
+
+
+
+if __name__ == '__main__':
+	
+	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112.csv")
+	college_name = "University of Alabama in Huntsville"
+	college_instance = dataframe[dataframe.INSTNM == college_name]
+	crime_per_student = handlers.all_crimes_per_student_over_years("On Campus", "Crime", college_instance, crimes_obj)
+
+	g=Graphs(crime_per_student, college_instance)
+
