@@ -27,6 +27,7 @@ def data_initialization(path):
 
 	return data_frame, crimes_obj
 
+# Question 1
 def all_crimes_per_student_over_years(data_source, type_of_data, college_instance, crimes_obj):
 	'''Returns the rate of crimes per student for every crime at a given college'''
 
@@ -49,3 +50,7 @@ def all_crimes_per_student_over_years(data_source, type_of_data, college_instanc
 			print str(v)
 
 	return crime_per_student
+
+# Question 2
+def average_crimes_per_student():	
+	'''Returns the average crimes per student committed over the years recorded'''
