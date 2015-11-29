@@ -13,5 +13,5 @@ if __name__ == '__main__':
 
 	for crime in crime_per_student.keys():
 		print crime
-		print crime_per_student[crime]
+		print len(crime_per_student[crime])
 		print ""
