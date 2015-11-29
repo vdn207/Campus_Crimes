@@ -11,7 +11,5 @@ if __name__ == '__main__':
 	college_instance = dataframe[dataframe.INSTNM == college_name]
 	crime_per_student = handlers.all_crimes_per_student_over_years("On Campus", "Crime", college_instance, crimes_obj)
 
-	for crime in crime_per_student.keys():
-		print crime
-		print len(crime_per_student[crime])
-		print ""
+	print crime_per_student.keys()
+	print crime_per_student.values()
