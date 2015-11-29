@@ -33,13 +33,13 @@ def all_crimes_per_student_over_years(data_source, type_of_data, college_instanc
 
 	college_obj = coll.College(data_source, type_of_data, college_instance, crimes_obj)
 	all_crimes_frequencies = college_obj.get_all_crimes_frequencies()
-	total_students = college_obj.get_total_students()
+	total_students = college_obj.get_total_students()[0] 	# Because, the function is returning a list. Eg: [4567.]
 
 	crime_per_student = {}
 	for crime in all_crimes_frequencies.keys():	
 		try:
 			per_student = []
-			for freq in all_crimes_frequencies[crime].values[0]:
+			for freq in all_crimes_frequencies[crime]:
 				per_student.append(freq / total_students)
 			crime_per_student[crime] = per_student
 
