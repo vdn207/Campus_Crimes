@@ -52,5 +52,25 @@ def all_crimes_per_student_over_years(data_source, type_of_data, college_instanc
 	return crime_per_student
 
 # Question 2
-def average_crimes_per_student():	
+def average_crimes_per_student(data_source, type_of_data, college_instance, crimes_obj):	
 	'''Returns the average crimes per student committed over the years recorded'''
+
+	college_obj = coll.College(data_source, type_of_data, college_instance, crimes_obj)
+	all_crimes_frequencies = college_obj.get_all_crimes_frequencies()
+	total_students = college_obj.get_total_students()[0] 	# Because, the function is returning a list. Eg: [4567.]
+
+	average_crime_per_student = {}
+	for crime in all_crimes_frequencies.keys():	
+		try:
+			total_crimes = 0
+			for freq in all_crimes_frequencies[crime]:
+				total_crimes += freq
+			average_crime_per_student[crime] = total_crimes / total_students
+
+		except ZeroDivisionError as z:
+			print str(z)
+
+		except ValueError as v:
+			print str(v)
+
+	return average_crime_per_student

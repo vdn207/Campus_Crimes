@@ -9,7 +9,8 @@ if __name__ == '__main__':
 	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112.xls")
 	college_name = "Samford University"
 	college_instance = dataframe[dataframe.INSTNM == college_name]
-	crime_per_student = handlers.all_crimes_per_student_over_years("On Campus", "Crime", college_instance, crimes_obj)
+	#crime_per_student = handlers.all_crimes_per_student_over_years("On Campus", "Crime", college_instance, crimes_obj)
+	average_crime_per_student = handlers.average_crimes_per_student("On Campus", "Crime", college_instance, crimes_obj)	
 
-	print crime_per_student.keys()
-	print crime_per_student.values()
+	print average_crime_per_student.keys()
+	print average_crime_per_student.values()
