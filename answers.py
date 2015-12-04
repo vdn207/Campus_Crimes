@@ -126,7 +126,7 @@ if __name__ == '__main__':
 	for crime in  ['MURD', 'NEG_M', 'FORCIB', 'NONFOR', 'ROBBE', 'AGG_A', 'BURGLA', 'VEHIC', 'ARSON']:
 		fakeDictionary[crime]= random.uniform(0,.01)*10000
 
-	#print fakeDictionary
+
 	g=Answers(crime_per_student, fakeDictionary)
 	
 	g.visualize_answer2()

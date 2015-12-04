@@ -6,7 +6,7 @@ import handlers
 if __name__ == '__main__':
 	'''Handling the functionalities'''
 
-	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112.csv")
+	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112.xls")
 	college_name = "University of Alabama in Huntsville"
 	college_instance = dataframe[dataframe.INSTNM == college_name]
 	crime_per_student = handlers.all_crimes_per_student_over_years("On Campus", "Crime", college_instance, crimes_obj)

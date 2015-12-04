@@ -13,8 +13,7 @@ def data_initialization(path):
 	'''Initializes the initial data requirements of the system'''
 
 	try:
-		#data_frame = pd.read_excel(path)
-		data_frame = pd.read_csv(path)
+		data_frame = pd.read_excel(path)
 
 	except IOError as IOE:
 		print str(IOE)
