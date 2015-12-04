@@ -1,4 +1,5 @@
 '''Class that contains all answers pertaining to a college'''
+<<<<<<< HEAD
 import numpy as np 
 import pandas as pd 
 import matplotlib.pyplot as plt 
@@ -20,10 +21,24 @@ class Answers:
 		self.crimes_list = ['MURD', 'NEG_M', 'FORCIB', 'NONFOR', 'ROBBE', 'AGG_A', 'BURGLA', 'VEHIC', 'ARSON']
 		self.crimeNames= ["Forcible Rape", "Arson", "Manslaughter", "Murder", "NonForcible Rape", "Vehicle Theft","Burglary", "Aggravated Assault" ,"Robbery"]
 		
+=======
+
+class Answers:
+	'''Class definition'''
+
+	def __init__(self, answer1, answer2, answer3, answer4):
+		'''Constructor'''
+
+		self.answer1 = answer1
+		self.answer2 = answer2
+		self.answer3 = answer3
+		self.answer4 = answer4
+>>>>>>> upstream/master
 
 	def visualize_answer1(self):
 		'''Code to visualize answer to question 1'''
 
+<<<<<<< HEAD
 		ax = plt.subplot(111)
 		w = .3		
 		padding =.1
@@ -130,3 +145,7 @@ if __name__ == '__main__':
 	g=Answers(crime_per_student, fakeDictionary)
 	
 	g.visualize_answer2()
+=======
+	def visualize_answer2(self):
+		'''Code to visualize answer to question 2'''
+>>>>>>> upstream/master
