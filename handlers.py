@@ -28,11 +28,15 @@ def data_initialization(path):
 	return data_frame, crimes_obj
 
 # Question 1
-def all_crimes_per_student_over_years(data_source, type_of_data, college_instance, crimes_obj):
+def all_crimes_per_student_over_years(data_source, type_of_data, college_instance, crimes_obj, per_student = True):
 	'''Returns the rate of crimes per student for every crime at a given college'''
 
 	college_obj = coll.College(data_source, type_of_data, college_instance, crimes_obj)
 	all_crimes_frequencies = college_obj.get_all_crimes_frequencies()
+	
+	if not per_student:
+		return all_crimes_frequencies
+
 	total_students = college_obj.get_total_students()[0] 	# Because, the function is returning a list. Eg: [4567.]
 
 	crime_per_student = {}
@@ -74,3 +78,25 @@ def average_crimes_per_student(data_source, type_of_data, college_instance, crim
 			print str(v)
 
 	return average_crime_per_student
+
+# Question 3
+def average_crimes_per_student_by_category(dataframe, category, crimes_obj, overall_average = False):
+	'''Returns the rate of crimes per student for every crime for a given category - where category can be thought
+	   as ZIP Codes, State, College Sector
+
+	   The output is a dictionary with key = crime and value is a series where indices are the different categories
+	   and the values are rate of 'crime' per student in that sector
+	'''
+
+	crimes_by_category_dict = {}
+	for crime in crimes_obj.get_crimes_list_short():
+		crime_by_category_list = []
+		for year in crimes_obj.get_years_recorded():
+			crime_by_category_list.append(dataframe.groupby(by=[category])[crime + year].sum() / dataframe.groupby(by=[category])['Total'].sum())
+
+		if overall_average:
+			crimes_by_category_dict[crime] = sum(crime_by_category_list)
+		else:
+			crimes_by_category_dict[crime] = crime_by_category_list
+
+	return crimes_by_category_dict
