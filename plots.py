@@ -1,4 +1,5 @@
 '''Class that contains all answers pertaining to a college'''
+
 import numpy as np 
 import pandas as pd 
 import matplotlib.pyplot as plt 
@@ -126,7 +127,11 @@ if __name__ == '__main__':
 	for crime in  ['MURD', 'NEG_M', 'FORCIB', 'NONFOR', 'ROBBE', 'AGG_A', 'BURGLA', 'VEHIC', 'ARSON']:
 		fakeDictionary[crime]= random.uniform(0,.01)*10000
 
-	#print fakeDictionary
-	g=Answers(crime_per_student, fakeDictionary)
+	d = handlers.average_crimes_per_student("on_campus","crime",college_instance, crimes_obj)
+	g=Answers(crime_per_student, d)
 	
 	g.visualize_answer2()
+
+	def visualize_answer2(self):
+		'''Code to visualize answer to question 2'''
+
