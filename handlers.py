@@ -53,7 +53,7 @@ def all_crimes_per_student_over_years(data_source, type_of_data, college_instanc
 		except ValueError as v:
 			print str(v)
 
-	return crime_per_student
+	return crime_per_student, crimes_obj
 
 # Question 2
 def average_crimes_per_student(data_source, type_of_data, college_instance, crimes_obj):	
@@ -77,7 +77,7 @@ def average_crimes_per_student(data_source, type_of_data, college_instance, crim
 		except ValueError as v:
 			print str(v)
 
-	return average_crime_per_student
+	return average_crime_per_student, crimes_obj
 
 # Question 3
 def average_crimes_per_student_by_category(dataframe, category, crimes_obj, overall_average = False):
@@ -99,4 +99,4 @@ def average_crimes_per_student_by_category(dataframe, category, crimes_obj, over
 		else:
 			crimes_by_category_dict[crime] = crime_by_category_list
 
-	return crimes_by_category_dict
+	return crimes_by_category_dict, crimes_obj
