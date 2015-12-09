@@ -8,9 +8,13 @@ if __name__ == '__main__':
 
 	# SEAN's PART
 	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112.xls")
+<<<<<<< HEAD
+	college_name = "University of Alabama in Huntsville"
+=======
 	college_name = "Samford University"
 
 	# VARUN's PART
+>>>>>>> upstream/master
 	college_instance = dataframe[dataframe.INSTNM == college_name]
 	crime_per_student = handlers.all_crimes_per_student_over_years("On Campus", "Crime", college_instance, crimes_obj)
 
@@ -20,5 +24,12 @@ if __name__ == '__main__':
 		print crime_per_student[crime]
 		print ""
 
+<<<<<<< HEAD
+print dataframe['INSTNM'][:10]
+#print crime_per_student
+
+	
+=======
 	# MIKE's PART
 	
+>>>>>>> upstream/master

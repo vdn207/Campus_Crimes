@@ -103,3 +103,4 @@ def average_crimes_per_student_by_category(dataframe, category, crimes_obj, over
 			crimes_by_category_dict[crime] = crime_by_category_list
 
 	return crimes_by_category_dict, crimes_obj
+
