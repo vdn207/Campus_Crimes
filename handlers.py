@@ -86,6 +86,9 @@ def average_crimes_per_student_by_category(dataframe, category, crimes_obj, over
 
 	   The output is a dictionary with key = crime and value is a series where indices are the different categories
 	   and the values are rate of 'crime' per student in that sector
+
+	   overall_average - set to True if you need the average over the years.)
+
 	'''
 
 	crimes_by_category_dict = {}
