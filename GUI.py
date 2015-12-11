@@ -26,8 +26,8 @@ from PIL import Image, ImageTk
 #import Image, ImageTk
 import matplotlib.pyplot as plt
 
-global University_name
-global branch_name
+University_name = ""
+branch_name = ""
 
 
 class Window(Frame):
@@ -219,9 +219,13 @@ def gui(dataframe):
 
 
 def set_uni(Uni_name):
+    print "Setting uni name"
+    global University_name
     University_name = Uni_name
 
 def set_branch(br_name):
+    print "Setting branch name"
+    global branch_name
     branch_name = br_name
 
 def get_uni():
