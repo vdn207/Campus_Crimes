@@ -20,7 +20,7 @@ class Answers:
 	
 	
 	
-	def __init__(self, crimeObj, answer1,answer2,answer3):
+	def __init__(self, crimeObj, collegeObj, pltparam, answer1,answer2,answer3):
 		'''Constructor'''
 		self.answer1=answer1   #currently is a dictionary with Series as value
 		self.answer2=answer2   #currently is a dictionary with array for value
@@ -28,7 +28,8 @@ class Answers:
 		self.crimes_list = crimeObj.get_crimes_list_short()
 		self.crimeNames= crimeObj.get_crimes_list_long()
 		self.crimeObj=crimeObj
-		
+		self.pltparam = pltparam
+		self.collegeObj = collegeObj
 
 	def visualize_answer1(self):
 		'''
@@ -54,16 +55,16 @@ class Answers:
 
 		
 		#bar for each year
-		rect1 = ax.bar( x - pltparam.width, y_10 , width = pltparam.width, color='r', align='center')
-		rect2 = ax.bar(x, y_11, width = pltparam.width, color='g', align='center')
-		rect3 = ax.bar(x + pltparam.width, y_12, width = pltparam.width, color='b', align='center')
+		rect1 = ax.bar( x - self.pltparam.width, y_10 , width = self.pltparam.width, color='r', align='center')
+		rect2 = ax.bar(x, y_11, width = self.pltparam.width, color='g', align='center')
+		rect3 = ax.bar(x + self.pltparam.width, y_12, width = self.pltparam.width, color='b', align='center')
 		
 		#set ticks and rotate text
-		plt.xticks([ a + pltparam.width/2 for a in  x],[name for name in self.crimeNames], rotation= 30, ha='right') 
+		plt.xticks([ a + self.pltparam.width/2 for a in  x],[name for name in self.crimeNames], rotation= 30, ha='right') 
 
 		ax.set_xlabel('Particular Crime by Year ', fontsize=fontsize)
 		ax.set_ylabel('Crime Rate (per 10,000 students)', fontsize=fontsize)
-		ax.set_title(college_name + " Crime By Year ", fontsize=fontsize)
+		ax.set_title(self.collegeObj.get_college_name() + " Crime By Year ", fontsize=fontsize)
 		ax.autoscale(tight=True)
  
 		#add 	padding
@@ -97,14 +98,14 @@ class Answers:
 		fontsize=15
 
 		x = np.array(range(1, len(self.crimes_list) + 1))
-		rects = ax.bar(x, np.array(self.answer2.values())*10000, width = pltparam.width, align='center')
+		rects = ax.bar(x, np.array(self.answer2.values())*10000, width = self.pltparam.width, align='center')
 		
 		#set ticks and rotate text
-		plt.xticks([ a + pltparam.width/2 for a in  x],[name for name in self.crimeNames], rotation= 30, ha='right') 
+		plt.xticks([ a + self.pltparam.width/2 for a in  x],[name for name in self.crimeNames], rotation= 30, ha='right') 
 
 		ax.set_xlabel('Particular Crime by Year ', fontsize=fontsize)
 		ax.set_ylabel('Crime Rate (per 10,000 students)', fontsize=fontsize)
-		ax.set_title(college_name + " Crime  ", fontsize=fontsize)
+		ax.set_title(self.collegeObj.get_college_name() + " Crime  ", fontsize=fontsize)
 		ax.autoscale(tight=True)
 
 		#add padding
@@ -142,11 +143,11 @@ class Answers:
 		
 		ax = plt.subplot(111)
 		x = range(numBars)
-		rects = ax.bar(x, heights, width = pltparam.width, align='center')
+		rects = ax.bar(x, heights, width = self.pltparam.width, align='center')
 		
 		#set ticks and rotate text
-		plt.xticks([ a + pltparam.width/2 for a in  x],[name for name in labels], rotation= 90, ha='right', fontsize = pltparam.getTickFontSize(numBars) ) 
-		ax.set_xlabel('Particular Crime by Year ', fontsize=pltparam.fontsize)
+		plt.xticks([ a + self.pltparam.width/2 for a in  x],[name for name in labels], rotation= 90, ha='right', fontsize = self.pltparam.getTickFontSize(numBars) ) 
+		ax.set_xlabel('Particular Crime by Year ', fontsize=self.pltparam.fontsize)
 		ax.set_ylabel('Crime Rate (per 10,000 students)', fontsize=15)
 		ax.set_title(" Crime by " + str("State") , fontsize=15)
 		ax.autoscale(tight=True)
@@ -244,14 +245,14 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		sizes = [ data[key] for key in nonEmptyKeys ]  #remove empty crimes from values
 
 		#put back in dictionary form so that it will be accepted by alternatingDictionary
-		labels = pltparam.alternatingDictionary( dict(zip(nonEmptyKeys, sizes)) )	
+		labels = self.pltparam.alternatingDictionary( dict(zip(nonEmptyKeys, sizes)) )	
 
 		sizes = [ data[key] for key in labels ]	#reset sizes according to new reordering of labels
 		
 		sumOfSizes = sum(sizes)  #if the sum of the sizes is not one we need to normalize
 		sizes = [ size/sumOfSizes for size in sizes]  #by altering our size list so sum of entries is 1
 
-		colors = pltparam.getColors(numPieces)  #get appropriate number of evenly spaced colors
+		colors = self.pltparam.getColors(numPieces)  #get appropriate number of evenly spaced colors
 		
 		indexesToExplode=[1,3]
 		explode = [.03 for a in range(numPieces) ] # set default for slices to be slightly separated
@@ -266,11 +267,11 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		
 		plt.show()
 			
-
+'''
 if __name__ == '__main__':
 	
 
-	pltparam = p.pltParam() #holds values specific to graphs like width, padding,fontsize
+	self.pltparam = p.self.pltParam() #holds values specific to graphs like width, padding,fontsize
 
 
 	college_name = "Harvard University"
@@ -294,3 +295,4 @@ if __name__ == '__main__':
 	#g.pieChart(a)
 
 	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112.csv")
+'''

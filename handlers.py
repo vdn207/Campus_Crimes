@@ -13,7 +13,7 @@ def data_initialization(path):
 	'''Initializes the initial data requirements of the system'''
 
 	try:
-		data_frame = pd.read_csv(path)
+		data_frame = pd.read_excel(path)
 
 	except IOError as IOE:
 		print str(IOE)
@@ -37,7 +37,7 @@ def data_initialization(path):
 	return data_frame, crimes_obj
 
 # Question 1
-def all_crimes_per_student_over_years(college_instance, crimes_obj, per_student = True, average = False):
+def all_crimes_per_student_over_years(college_obj, crimes_obj, per_student = True, average = False):
 	'''
 	The college instance represents the college specific tuple. The crimes_obj is the same throughout the program.
 	If per_student = False, then the frequencies of crimes will be returned instead of per student.
@@ -47,7 +47,7 @@ def all_crimes_per_student_over_years(college_instance, crimes_obj, per_student 
 	Returns a dictionary with key=Crime and value=list (3 values) or average (1 value)
 	'''
 
-	college_obj = coll.College(college_instance, crimes_obj)
+	#college_obj = coll.College(college_instance, crimes_obj)
 	all_crimes_frequencies = college_obj.get_all_crimes_frequencies()
 
 	if not per_student:
@@ -61,7 +61,7 @@ def all_crimes_per_student_over_years(college_instance, crimes_obj, per_student 
 			if average:
 				crime_per_student[crime] = all_crimes_frequencies[crime].sum() / total_students 	# Question 2
 			else:
-				crime_per_student[crime] = all_crimes_frequencies[crime] / total_students  	# Question 1
+				crime_per_student[crime] = all_crimes_frequencies[crime][0] / total_students  	# Question 1
 
 		except ZeroDivisionError as z:
 			print str(z)
@@ -88,12 +88,12 @@ def average_crimes_per_student_by_category(dataframe, category, crimes_obj, over
 	for crime in crimes_obj.get_crimes_list_short():
 		crime_by_category_list = []
 		for year in crimes_obj.get_years_recorded():
-			crime_by_category_list.append(dataframe.groupby(by=[category])[crime + year].sum() / dataframe.groupby(by=[category])['Total'].sum())
+			crime_by_category_list.append(dataframe.groupby(by=['BASIC'][category])[crime][crime + year].sum() / dataframe.groupby(by=['BASIC'][category])['BASIC']['Total'].sum())
 
 		if overall_average:
 			crimes_by_category_dict[crime] = sum(crime_by_category_list)
 		else:
 			crimes_by_category_dict[crime] = crime_by_category_list
 
-	return crimes_by_category_dict, crimes_obj
+	return crimes_by_category_dict
 
