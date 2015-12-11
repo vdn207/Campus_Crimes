@@ -108,7 +108,7 @@ def gui(dataframe):
         Quit_button.grid_remove()
 
         #BUTTON
-        button5 = Button(text="SEARCH", command=text_GO, fg="blue")
+        button5 = Button(text="SEARCH", command=quit, fg="blue")
         button5.grid(row=4,column =1,columnspan=2,padx=10)
     
 
