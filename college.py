@@ -49,3 +49,7 @@ class College:
 		'''Returns total students in the college'''
 
 		return self.basic_details['Total'].values
+
+	def get_college_name(self):
+
+		return self.basic_details['INSTNM'].values
