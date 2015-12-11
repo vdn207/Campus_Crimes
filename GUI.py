@@ -221,18 +221,10 @@ def gui(dataframe):
 
 
 def set_uni(Uni_name):
-<<<<<<< HEAD
-    print "Setting uni name"
-=======
->>>>>>> d0c1064f7ff37d4914de69c5bb663f044f162ae6
     global University_name
     University_name = Uni_name
 
 def set_branch(br_name):
-<<<<<<< HEAD
-    print "Setting branch name"
-=======
->>>>>>> d0c1064f7ff37d4914de69c5bb663f044f162ae6
     global branch_name
     branch_name = br_name
 
