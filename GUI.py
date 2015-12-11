@@ -49,6 +49,7 @@ class Window(Frame):
 
 def gui(dataframe):
 
+
     df = dataframe['BASIC']
 
     root = Tk()
@@ -89,9 +90,10 @@ def gui(dataframe):
             
             #Text box
             choices = get_branches(str_parameter)
-            var3 = StringVar(root)
-            var3.set('None selected')
-            drop = OptionMenu(root,var3,*choices)
+            global var4
+            var4 = StringVar(root)
+            var4.set('None selected')
+            drop = OptionMenu(root,var4,*choices)
             drop.grid(row=3,column=1)
 
             button5 = Button(text="GO", command=branch_GO, fg="blue")
@@ -101,7 +103,7 @@ def gui(dataframe):
     
     def branch_GO():
         """This function for what happens after GO is pressed after the branch is chosen"""
-        branch_name = str(var3.get())
+        branch_name = str(var4.get())
         #print "Yo boy", University_name, branch_name
         
         set_branch(branch_name)
@@ -219,9 +221,11 @@ def gui(dataframe):
 
 
 def set_uni(Uni_name):
+    global University_name
     University_name = Uni_name
 
 def set_branch(br_name):
+    global branch_name
     branch_name = br_name
 
 def get_uni():
@@ -237,4 +241,7 @@ def get_branch():
 def start_user_interface(dataframe):
     gui(dataframe)
 
+#if __name__ == '__main__':
+    #start_user_interface(pd.read_csv("data/oncampuscrime101112.csv"))
+    #print get_branch()
     
