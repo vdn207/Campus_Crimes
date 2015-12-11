@@ -102,19 +102,34 @@ def gui(dataframe):
     def branch_GO():
         """This function for what happens after GO is pressed after the branch is chosen"""
         branch_name = str(var3.get())
-        print "Yo boy", University_name, branch_name
-        return University_name, branch_name
+        #print "Yo boy", University_name, branch_name
+        
+        set_branch(branch_name)
+        Quit_button.grid_remove()
+
+        #BUTTON
+        button5 = Button(text="SEARCH", command=text_GO, fg="blue")
+        button5.grid(row=4,column =1,columnspan=2,padx=10)
     
-    
-    def text_GO():
-        """This function is for the GO button for Text box input"""
-        button_press(str(user_input.get()))
-        global University_name
-        University_name = (str(user_input.get()))
+
+    def remove_elements():
+        button1.grid_remove()
+        button2.grid_remove()
         button3.grid_remove()
         button4.grid_remove()
         drop_filter_by_type.grid_remove()
         drop_filter_by_state.grid_remove()
+
+        
+
+
+    
+    def text_GO():
+        """This function is for the GO button for Text box input"""
+        button_press(str(user_input.get()))
+        set_uni(str(user_input.get()))
+        #University_name = str(user_input.get())
+        remove_elements()
         
 
     
@@ -142,12 +157,8 @@ def gui(dataframe):
     def drop_down_GO():
         """This function is for the GO button for dropdown"""
         button_press(str(var1.get()))
-        global University_name
-        University_name = (str(var1.get()))
-        button3.grid_remove()
-        button4.grid_remove()
-        drop_filter_by_type.grid_remove()
-        drop_filter_by_state.grid_remove()
+        set_uni(str(var1.get()))
+        remove_elements()
 
     drop_down()
     
@@ -197,12 +208,33 @@ def gui(dataframe):
     button2 = Button(text="GO", command=drop_down_GO, fg="blue")
     button2.grid(row=2,column=2)
     
-    
-    Quit_button = Button(root, text="Quit", command=quit).grid(row=6,column =1)
+
+    Quit_button = Button(root, text="Quit", command=quit)
+    Quit_button.grid(row=6,column =1)
 
     app = Window(root)
     root.mainloop()
 
+
+
+
+def set_uni(Uni_name):
+    University_name = Uni_name
+
+def set_branch(br_name):
+    branch_name = br_name
+
+def get_uni():
+    return University_name
+
+def get_branch():
+    return branch_name
+
+
+
+
+
 def start_user_interface(dataframe):
     gui(dataframe)
+
     
