@@ -23,17 +23,33 @@ def data_initialization(path):
 	years = ['10', '11', '12']
 	crime_full_names = {"MURD":"Murder", "NEG_M":"Negligent Manslaughter", "FORCIB":"Forcible Sex Offense", "NONFOR":"Non Forcible Sex Offense", "ROBBE":"Robbery", "AGG_A":"Aggravated Assault", "BURGLA":"Burglary", "VEHIC":"Motor Vehicle Theft", "ARSON":"Arson"}
 
+	# Renaming columns. Using hierarchical indexing
+	actual_columns = data_frame.columns.values.tolist()
+	abstract_columns = ['BASIC'] * 12 + ['MURD'] * 3 + ['NEG_M'] * 3 + ['FORCIB'] * 3 + ['NONFOR'] * 3 + ['ROBBE'] * 3 + ['AGG_A'] * 3 + ['BURGLA'] * 3 + ['VEHIC'] * 3 + ['ARSON'] * 3	+ ['FILTER'] * 3
+
+	# Resetting the column names as a hierarchy
+	hierarchical_column_index = pd.MultiIndex.from_arrays([abstract_columns, actual_columns])	# PANDAS
+	data_frame.columns = hierarchical_column_index
+	data_frame.columns.names = ['ABSTRACT', 'SPECIFIC']
+
 	crimes_obj = crimes.Crimes(crimes_list, years, crime_full_names)
 
 	return data_frame, crimes_obj
 
 # Question 1
-def all_crimes_per_student_over_years(data_source, type_of_data, college_instance, crimes_obj, per_student = True):
-	'''Returns the rate of crimes per student for every crime at a given college'''
+def all_crimes_per_student_over_years(college_instance, crimes_obj, per_student = True, average = False):
+	'''
+	The college instance represents the college specific tuple. The crimes_obj is the same throughout the program.
+	If per_student = False, then the frequencies of crimes will be returned instead of per student.
 
-	college_obj = coll.College(data_source, type_of_data, college_instance, crimes_obj)
+	If average=True, the average over the 3 years will be computed and returned.
+
+	Returns a dictionary with key=Crime and value=list (3 values) or average (1 value)
+	'''
+
+	college_obj = coll.College(college_instance, crimes_obj)
 	all_crimes_frequencies = college_obj.get_all_crimes_frequencies()
-	
+
 	if not per_student:
 		return all_crimes_frequencies
 
@@ -42,10 +58,10 @@ def all_crimes_per_student_over_years(data_source, type_of_data, college_instanc
 	crime_per_student = {}
 	for crime in all_crimes_frequencies.keys():	
 		try:
-			per_student = []
-			for freq in all_crimes_frequencies[crime]:
-				per_student.append(freq / total_students)
-			crime_per_student[crime] = per_student
+			if average:
+				crime_per_student[crime] = all_crimes_frequencies[crime].sum() / total_students 	# Question 2
+			else:
+				crime_per_student[crime] = all_crimes_frequencies[crime] / total_students  	# Question 1
 
 		except ZeroDivisionError as z:
 			print str(z)
@@ -53,31 +69,8 @@ def all_crimes_per_student_over_years(data_source, type_of_data, college_instanc
 		except ValueError as v:
 			print str(v)
 
-	return crime_per_student, crimes_obj
+	return crime_per_student
 
-# Question 2
-def average_crimes_per_student(data_source, type_of_data, college_instance, crimes_obj):	
-	'''Returns the average crimes per student committed over the years recorded'''
-
-	college_obj = coll.College(data_source, type_of_data, college_instance, crimes_obj)
-	all_crimes_frequencies = college_obj.get_all_crimes_frequencies()
-	total_students = college_obj.get_total_students()[0] 	# Because, the function is returning a list. Eg: [4567.]
-
-	average_crime_per_student = {}
-	for crime in all_crimes_frequencies.keys():	
-		try:
-			total_crimes = 0
-			for freq in all_crimes_frequencies[crime]:
-				total_crimes += freq
-			average_crime_per_student[crime] = total_crimes / total_students
-
-		except ZeroDivisionError as z:
-			print str(z)
-
-		except ValueError as v:
-			print str(v)
-
-	return average_crime_per_student, crimes_obj
 
 # Question 3
 def average_crimes_per_student_by_category(dataframe, category, crimes_obj, overall_average = False):
