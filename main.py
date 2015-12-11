@@ -2,12 +2,15 @@ import numpy as np
 import pandas as pd 
 import matplotlib.pyplot as plt 
 import handlers
+import gooey_testing as gui
 
 if __name__ == '__main__':
 	'''Handling the functionalities'''
 
 	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112.xls")
-	
+	gui.start_user_interface(dataframe)
+
+	'''
 	#college_name = "Samford University"
 	#college_instance = dataframe[dataframe['BASIC']['INSTNM'] == college_name]
 	#crime_per_student = handlers.all_crimes_per_student_over_years(college_instance, crimes_obj, average=True)
@@ -19,3 +22,4 @@ if __name__ == '__main__':
 	#print average_crime_per_student.keys()
 	#print average_crime_per_student.values()
 	#print average_crime_per_student['MURD'].index.values
+	'''
