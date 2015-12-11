@@ -26,6 +26,8 @@ from PIL import Image, ImageTk
 #import Image, ImageTk
 import matplotlib.pyplot as plt
 
+global University_name
+global branch_name
 
 
 class Window(Frame):
@@ -45,7 +47,9 @@ class Window(Frame):
 
 
 
-def gui():
+def gui(dataframe):
+
+    df = dataframe['BASIC']
 
     root = Tk()
 
@@ -67,6 +71,11 @@ def gui():
     user_input = Entry(root,bd=3,selectforeground="yellow")
     user_input.grid(row=1,column=1)
 
+    def get_branches(uni_name):
+        """Returns a list of branches corresponding to a university"""
+        mask=df['INSTNM']==uni_name
+        subsetted_df = df[mask]
+        return subsetted_df['BRANCH'].tolist()
 
     
     def button_press(str_parameter):
@@ -93,14 +102,15 @@ def gui():
     def branch_GO():
         """This function for what happens after GO is pressed after the branch is chosen"""
         branch_name = str(var3.get())
-        print branch_name
+        print "Yo boy", University_name, branch_name
+        return University_name, branch_name
     
     
     def text_GO():
         """This function is for the GO button for Text box input"""
         button_press(str(user_input.get()))
+        global University_name
         University_name = (str(user_input.get()))
-        print University_name
         button3.grid_remove()
         button4.grid_remove()
         drop_filter_by_type.grid_remove()
@@ -132,6 +142,8 @@ def gui():
     def drop_down_GO():
         """This function is for the GO button for dropdown"""
         button_press(str(var1.get()))
+        global University_name
+        University_name = (str(var1.get()))
         button3.grid_remove()
         button4.grid_remove()
         drop_filter_by_type.grid_remove()
@@ -151,8 +163,8 @@ def gui():
     drop_filter_by_state.grid(row=3,column=1)
 
     def filter_by_state():
-        mask = filtered_df['State']==str(var2.get())
-        filtered_list = np.sort(filtered_df[mask]['INSTNM'].unique())
+        mask = df['State']==str(var2.get())
+        filtered_list = np.sort(df[mask]['INSTNM'].unique())
         drop_down(choices=filtered_list)
         #filtered_df = filtered_df[mask]
 
@@ -186,50 +198,11 @@ def gui():
     button2.grid(row=2,column=2)
     
     
-    Quit_button(root, text="Quit", command=quit).grid(row=6,column =1)
+    Quit_button = Button(root, text="Quit", command=quit).grid(row=6,column =1)
 
     app = Window(root)
     root.mainloop()
 
-
-
-
-
-
-
-def get_branches(uni_name):
-    """Returns a list of branches corresponding to a university"""
-    mask=df['INSTNM']==uni_name
-    subsetted_df = df[mask]
-    return subsetted_df['BRANCH'].tolist()
-
-
-
-
-
-
-def read_data():
-    """Reads the data into global variable df and makes it publicly accessible"""
-    global df
-    df = pd.read_excel('oncampuscrime101112.xls') 
-   
-
-
-def main():
-    try:
-        read_data()
-    except:
-        print "Error in reading the data"
-    try:
-        gui()
-    except:
-        print "Error in GUI"
-
-
-
-
+def start_user_interface(dataframe):
+    gui(dataframe)
     
-
-if __name__ == '__main__':
-    read_data()
-    gui()

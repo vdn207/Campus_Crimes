@@ -2,13 +2,14 @@ import numpy as np
 import pandas as pd 
 import matplotlib.pyplot as plt 
 import handlers
-import gooey_testing as gui
+import GUI
 
 if __name__ == '__main__':
 	'''Handling the functionalities'''
 
 	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112.xls")
-	gui.start_user_interface(dataframe)
+	GUI.start_user_interface(dataframe)
+	print "gigioghiowegn"
 
 	'''
 	#college_name = "Samford University"
