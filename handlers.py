@@ -25,7 +25,7 @@ def data_initialization(path):
 
 	# Renaming columns. Using hierarchical indexing
 	actual_columns = data_frame.columns.values.tolist()
-	abstract_columns = ['BASIC'] * 12 + ['MURD'] * 3 + ['NEG_M'] * 3 + ['FORCIB'] * 3 + ['NONFOR'] * 3 + ['ROBBE'] * 3 + ['AGG_A'] * 3 + ['BURGLA'] * 3 + ['VEHIC'] * 3 + ['ARSON'] * 3	+ ['FILTER'] * 3
+	abstract_columns = ['BASIC'] * 12 + ['MURD', 'NEG_M', 'FORCIB', 'NONFOR', 'ROBBE', 'AGG_A', 'BURGLA', 'VEHIC', 'ARSON'] * 3 + ['FILTER'] * 3
 
 	# Resetting the column names as a hierarchy
 	hierarchical_column_index = pd.MultiIndex.from_arrays([abstract_columns, actual_columns])	# PANDAS
@@ -85,15 +85,14 @@ def average_crimes_per_student_by_category(dataframe, category, crimes_obj, over
 	'''
 
 	crimes_by_category_dict = {}
-	for crime in crimes_obj.get_crimes_list_short():
-		crime_by_category_list = []
-		for year in crimes_obj.get_years_recorded():
-			crime_by_category_list.append(dataframe.groupby(by=['BASIC'][category])[crime][crime + year].sum() / dataframe.groupby(by=['BASIC'][category])['BASIC']['Total'].sum())
+	groupby_category_with_aggregation = dataframe.groupby(by=[('BASIC', category)]).aggregate(np.sum)
+	total_students = groupby_category_with_aggregation[('BASIC', 'Total')]
 
+	for crime in crimes_obj.get_crimes_list_short():
 		if overall_average:
-			crimes_by_category_dict[crime] = sum(crime_by_category_list)
+			crimes_by_category_dict[crime] = groupby_category_with_aggregation[crime].div(total_students.ix[0], axis = 'rows').sum(axis=1)
 		else:
-			crimes_by_category_dict[crime] = crime_by_category_list
+			crimes_by_category_dict[crime] = groupby_category_with_aggregation[crime].div(total_students.ix[0], axis = 'rows')
 
 	return crimes_by_category_dict
 

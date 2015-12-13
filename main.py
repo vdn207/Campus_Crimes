@@ -1,3 +1,9 @@
+'''
+Varun D N - vdn207@nyu.edu
+'''
+
+'''The main program orchestrating the different components of the project'''
+
 import numpy as np 
 import pandas as pd 
 import matplotlib.pyplot as plt 
@@ -8,9 +14,10 @@ import college as coll
 import plottingParameters as plotting
 
 if __name__ == '__main__':
-	'''Handling the functionalities'''
+	'''The main program running the software'''
 
 	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112.xls")
+
 	GUI.start_user_interface(dataframe)
 	university_name = GUI.get_uni()
 	branch_name = GUI.get_branch()
@@ -22,10 +29,8 @@ if __name__ == '__main__':
 
 	crime_per_student_without_average = handlers.all_crimes_per_student_over_years(college_obj, crimes_obj)	# Question 1
 	crime_per_student_with_average = handlers.all_crimes_per_student_over_years(college_obj, crimes_obj, average=True)	# Question 2
-	#crimes_per_student_by_category = handlers.average_crimes_per_student_by_category(dataframe, 'State', crimes_obj)
+	crimes_per_student_by_category = handlers.average_crimes_per_student_by_category(dataframe, 'State', crimes_obj)	# Question 3
 	
-	#print crime_per_student_without_average
-	#print crime_per_student_with_average
 	pltparam = plotting.pltParam()
 	answers_obj = plots.Answers(crimes_obj, college_obj, pltparam, crime_per_student_without_average, crime_per_student_with_average, crime_per_student_with_average)
 
