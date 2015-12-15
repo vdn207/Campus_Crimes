@@ -1,9 +1,15 @@
+'''
+author: Michael Higgins
 
+'''
 		
 import numpy as np
+import pandas as pd
 import colorsys
 from collections import OrderedDict
 from scipy.interpolate import interp1d
+import mikeCustomException as cexcep
+
 
 class pltParam:
 	'''
@@ -21,6 +27,9 @@ class pltParam:
 		input is an integer, output is a list of distinct colors in rgb format.
 		
 		'''
+		if not isinstance(num_color,int):
+				raise cexcep.WrongFormat("Input must be a integer")
+
 		colors=[]
 		for i in np.arange(0., 360., 360. / num_colors):
 		    hue = i/360.
@@ -31,10 +40,14 @@ class pltParam:
 
 	def alternatingDictionary(self, unSortedDic):
 		'''
-		This is for plotting data on a pie Chart.  We want the values of big and small items to alternate
-		so there is no labeling overlap issues. 
-		returns list of keys
+		Input is dictionary or panda series. This is for plotting data on a pie Chart.  We want the values 			of big and small items to alternate so there is no labeling overlap issues. 
+		returns list of keys that represent alternating order of values.
 		'''
+		if type(unSortedDic) != dict:  
+			if not isinstance(unSortedDic , pd.core.series.Series ):  #if its not a series throw error
+				raise cexcep.WrongFormat("Input must be a dictionary")
+			unSortedDic = unSortedDic.to_dict()  # if its series can convert to dictionary
+			
 		sortedDic = OrderedDict(sorted(unSortedDic.items(), key=lambda t: t[1]))
 		keys = sortedDic.keys()
 		numKeys= len(keys)
@@ -70,7 +83,12 @@ class pltParam:
 
 if __name__ == '__main__':
 	p = pltParam()
-	print p.getTickFontSize(22)
+	print p.alternatingDictionary(7)
+	#print p.getTickFontSize(22)
+	#a = pd.Series([3,4])
+	b = {"a":3}
+	print isinstance(b,dict)
+
 
 
 

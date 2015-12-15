@@ -10,7 +10,7 @@ import plottingParameters as plotting
 if __name__ == '__main__':
 	'''Handling the functionalities'''
 
-	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112.xls")
+	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112_cleaned.csv")
 	GUI.start_user_interface(dataframe)
 	university_name = GUI.get_uni()
 	branch_name = GUI.get_branch()

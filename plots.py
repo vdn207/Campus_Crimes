@@ -12,6 +12,7 @@ from scipy.interpolate import interp1d
 import plottingParameters as p
 import random
 
+import MikeCustomException as cexcep
 from collections import OrderedDict
 
 
@@ -235,6 +236,8 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		input: dictionary, vals must be nonnegative
 		output: pieChart with alternating sizes of pieslices (to avoid overlapping of labels) 
 		'''
+		figure(num=None, figsize=(4, 4), dpi=80, facecolor='w', edgecolor='k')
+
 		#ordering dictionary and then alternating big and small values
 		keys= data.keys()
 		emptyKeys = [key for key in keys if data[key]<10**(-7) ]  #get names of keys that didnt occur
@@ -245,14 +248,21 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		sizes = [ data[key] for key in nonEmptyKeys ]  #remove empty crimes from values
 
 		#put back in dictionary form so that it will be accepted by alternatingDictionary
-		labels = self.pltparam.alternatingDictionary( dict(zip(nonEmptyKeys, sizes)) )	
+		try:
+			labels = self.pltparam.alternatingDictionary( dict(zip(nonEmptyKeys, sizes)) )	
+		except cexcep.WrongFormat as er:
+			print er
+		
 
 		sizes = [ data[key] for key in labels ]	#reset sizes according to new reordering of labels
 		
-		sumOfSizes = sum(sizes)  #if the sum of the sizes is not one we need to normalize
-		sizes = [ size/sumOfSizes for size in sizes]  #by altering our size list so sum of entries is 1
-
-		colors = self.pltparam.getColors(numPieces)  #get appropriate number of evenly spaced colors
+		 #if the sum of the sizes is not one we need to normalize
+		sizes = [ size/sum(sizes) for size in sizes]  #by altering our size list so sum of entries is 1
+		
+		try:  
+			colors = self.pltparam.getColors(numPieces)  #get appropriate number of evenly spaced colors
+		except cexcep.WrongFormat as er:
+			print er
 		
 		indexesToExplode=[1,3]
 		explode = [.03 for a in range(numPieces) ] # set default for slices to be slightly separated
@@ -264,8 +274,8 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 			autopct='%1.1f%%', shadow=True, startangle=90)
 		# Set aspect ratio to be equal so that pie is drawn as a circle.
 		plt.axis('equal')
-		
-		plt.show()
+		plt.savefig("pie" + ".jpg")
+		return "pie" + ".jpg"
 			
 '''
 if __name__ == '__main__':
