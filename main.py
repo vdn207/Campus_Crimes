@@ -16,7 +16,9 @@ import plottingParameters as plotting
 if __name__ == '__main__':
 	'''The main program running the software'''
 
-	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112.xls")
+	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112_cleaned.csv")
+	print dataframe.shape
+	print dataframe.columns.values
 
 	GUI.start_user_interface(dataframe)
 	university_name = GUI.get_uni()
@@ -24,7 +26,7 @@ if __name__ == '__main__':
 
 	print "Details about %s (%s) is being generated. Please wait..." % (university_name, branch_name)
 
-	college_instance = dataframe[(dataframe['BASIC']['INSTNM'] == university_name) & (dataframe['BASIC']['BRANCH'] == branch_name)]
+	college_instance = handlers.college_details(dataframe, university_name, branch_name)
 	college_obj = coll.College(college_instance, crimes_obj)
 
 	crime_per_student_without_average = handlers.all_crimes_per_student_over_years(college_obj, crimes_obj)	# Question 1
