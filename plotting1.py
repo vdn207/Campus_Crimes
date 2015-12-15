@@ -5,10 +5,12 @@ from Tkinter import *
 from math import *
 import pandas as pd
 import numpy as np
+import PIL
 from PIL import Image, ImageTk
 import matplotlib.pyplot as plt
 
 
+uni_name = ""
 
 class Window(Frame):
 
@@ -22,49 +24,47 @@ class Window(Frame):
 
     def initUI(self):
 
-        self.parent.title("University Crimes")
-        self.pack()
+        self.parent.title("Crime details of {0}".format(uni_name))
+        self.grid()
 
 
 
 
 
-
-def plotting1(path1,path2):
-
-    root = Tk() 
+def plotting1(path1,path2,uni_name_param):
     
+    root = Tk()
+    
+    global uni_name
+    uni_name = uni_name_param
+
     def quit():
-        root.quit()
 
 
+    img1 = Image.open(path1)
+    img1 = img1.resize((600, 450), PIL.Image.ANTIALIAS)
+    
 
-    img = ImageTk.PhotoImage(Image.open(path1))
-    label = Label(root, image = img)
-    label.image = img # keep a reference!
-    label.pack(side = LEFT) 
+    img1 = ImageTk.PhotoImage(img1)
 
-    img2 = ImageTk.PhotoImage(Image.open(path1))
-    label2 = Label(root, image = img)
-    label2.image = img # keep a reference!
-<<<<<<< HEAD
-    label2.grid(side = RIGHT) 
-=======
-    label2.pack(side = RIGHT) 
->>>>>>> upstream/master
+    label1 = Label(root, image = img1)
+    label1.image = img1 # keep a reference of the image
+    label1.grid(row = 1,column =0,pady=10,padx=20)
 
-    Button(root, text="BACK TO MAIN", command=quit).pack(side = BOTTOM)
+    
 
+    img2 = Image.open(path2)
+    img2 = img2.resize((600, 450), PIL.Image.ANTIALIAS)
+    img2 = ImageTk.PhotoImage(img2)
+    label2 = Label(root, image = img2)
+    label2.image = img2 # keep a reference of the image
+    label2.grid(row=1,column=1,pady=10,padx=20)
 
+    Button(root, text="BACK TO MAIN",width = 20, command=quit).grid(row=4,columnspan = 2,pady=10)#.pack(side = BOTTOM)
 
     app = Window(root)
     root.mainloop()
 
 
-if __name__ == '__main__':
-<<<<<<< HEAD
-    plotting1
-=======
-    plotting1("histoByState.jpg","histoByState2.jpg")
-	
->>>>>>> upstream/master
+#if __name__ == '__main__':
+    #plotting1("plot1.jpg","plot2.jpg","NYU")
