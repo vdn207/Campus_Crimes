@@ -245,17 +245,8 @@ def get_branch():
     return branch_name
 
 
-
-
-
 def start_user_interface(dataframe):
     try:
         gui(dataframe)
     except:
         print "Error in GUI"
-
-#if __name__ == '__main__':
-    #gui(pd.read_csv("data/oncampuscrime101112.csv"))
-    #print get_branch()
-    #print get_uni()
-    
