@@ -64,24 +64,45 @@ def crime_comparisons():
 	GUI4.start_user_interface()
 	print GUI4.get_crimes()
 
+def interface(dataframe):
+	'''Run the interace every time for the user'''
+
+	igui.initial_gui()
+	user_feature_choice = igui.get_result()
+
+	if user_feature_choice == 1:
+		print "Enter"
+		university_crime_explorer(dataframe)
+
+	elif user_feature_choice == 2:
+		university_comparer(dataframe)
+
+	elif user_feature_choice == 3:
+		category_wise_crime(dataframe)
+
+	else:
+		crime_comparisons()
+
+
 if __name__ == '__main__':
 	'''The main program running the software'''
 
 	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112_cleaned.csv")
 
+	interface(dataframe)
+
+	'''
 	while True:
-		igui.initial_gui()
-		user_feature_choice = igui.get_result()
+		interface(dataframe)
+		try:
+			user_request = raw_input("Press 1 to go explore again or else type 'quit' to exit from the program: ")
 
-		if user_feature_choice == 1:
-			print "Enter"
-			university_crime_explorer(dataframe)
+			if user_request == 'quit':
+				exit()
+			if user_request == '1':
+				continue
 
-		elif user_feature_choice == 2:
-			university_comparer(dataframe)
+		except KeyboardInterrupt:
+			continue 
 
-		elif user_feature_choice == 3:
-			category_wise_crime(dataframe)
-
-		else:
-			crime_comparisons()
+	'''
