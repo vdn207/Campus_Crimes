@@ -53,7 +53,7 @@ def gui(dataframe):
     root = Tk()
 
     def quit():
-        root.quit()
+        root.destroy()
     
     
     #The next 4 lines output a string

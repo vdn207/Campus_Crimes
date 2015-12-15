@@ -102,7 +102,7 @@ def gui(dataframe):
         remove_elements()
 
         global choice_1
-        choice_1="Sector"
+        choice_1="Sector_desc"
 
         #The next 4 lines output a string
         var = StringVar()

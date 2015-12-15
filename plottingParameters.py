@@ -79,7 +79,7 @@ class pltParam:
 		input: int, output float
 		helper function for picking appropriate font size for graphs with ticks 
 		'''
-		if not isinstance(unSortedDic , pd.core.series.Series ):  #if its not a series throw error
+		if not isinstance(numTicks , int):  #if its not a series throw error
 			raise cexcep.WrongFormat("Input must be an int")
 			return None
 
@@ -105,7 +105,7 @@ class pltParam:
 			output = output.set_value(key, (data[key])[category] )
 		return output
 		
-'''	
+
 			
 
 if __name__ == '__main__':
@@ -130,4 +130,4 @@ if __name__ == '__main__':
 
 	answers_obj.simpleBarChart(d,"MA")
 
-'''
+

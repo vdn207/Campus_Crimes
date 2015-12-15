@@ -42,6 +42,9 @@ class Answers:
 		input is a tuple, the first entry is a dictionary with the crime as a key and the rate as a value
 		'''
 		#crimeFrequency , crimeObject = self.answer1
+
+		plt.close("all")
+
 		ax = plt.subplot(111)		
 
 		x = np.array(range(1, len(self.crimes_list) + 1))
@@ -91,7 +94,7 @@ class Answers:
 				        '%.1f' % height,
 				        ha='center', va='bottom')
 		plt.tight_layout()
-		plotName =str(self.collegeObj.get_college_name()[0]) + "_answer1" + ".png"
+		plotName =str("output/" + self.collegeObj.get_college_name()[0]) + "_answer1" + ".png"
 		plt.savefig(plotName) 
 		return plotName
 
@@ -137,8 +140,11 @@ class Answers:
 		Note: aesthetically better if series is sorted 
 		output: barChart 
 		'''
+
+		plt.close("all")
+
 		# wrangle data to get info of interest
-		data = subsetDictionary(self, data , specificCategory)
+		data = self.pltparam.subsetDictionary(data , specificCategory)
 			
 		data.sort()
 		
@@ -161,18 +167,22 @@ class Answers:
 	
 		ax.set_xlabel('Particular Crime by Year ', fontsize=self.pltparam.fontsize)
 		ax.set_ylabel('Crime Rate (per 10,000 students)', fontsize=15)
-		ax.set_title(" Crime by " + str("State") , fontsize=15)
+		ax.set_title(" Crime by " + str(specificCategory) , fontsize=15)
 		ax.autoscale(tight=True)
 
 		#add padding
 		#plt.subplots_adjust(left=0.15,top=0.85)
 		plt.tight_layout()
-		#plt.savefig( 
-		plt.show()
+		plotName = "output/" + str(specificCategory)+ "_answer1" + ".png"
+		plt.savefig(plotName) 
+		return plotName
 
 
 
 	def visualize_answer3(self):
+
+		plt.close("all")
+
 		ax = plt.subplot(111)
 		crimeOfInterest = 'BURGLA'
 		categories = self.answer3[crimeOfInterest].index.values
@@ -197,41 +207,46 @@ class Answers:
 		#add padding
 		#plt.subplots_adjust(left=0.15,top=0.85)
 		plt.tight_layout()
-		#plt.savefig("histoByState" + ".jpg")
-		plt.show()
+		plotName = "output/" + str(self.collegeObj.get_college_name()[0]) + "_answer1" + ".png"
+		plt.savefig(plotName) 
+		return plotName
 	
 	
 
-	def visualize_answer4(self):
-		'''scatterplot of two crimes circles are states'''
+	def visualize_answer4(self, crime1 , crime2 ):
+		'''
+		Inputs are short names for two crimes
+		saves scatterplot of two crimes circles are states and returns name of image
+		'''
+		plt.close("all")
+
 		ax = plt.subplot(111)
 		crimeOfInterest = 'FORCIB'
 		crimeOfInterest2 = 'BURGLA'
-		labels = list(self.answer3[crimeOfInterest].index.values)
+		labels = list(self.answer3[crime1].index.values)
 		numPoints= len( labels)
 		
 		fontSizeFunction = interp1d([5,75],[20,5])  #pick mapping for size of font
 		fontsize = 15		
 		fontsize= float( fontSizeFunction(numPoints) )
 		
-		dataX = list(self.answer3[crimeOfInterest].values*10000)
-		dataY = list(self.answer3[crimeOfInterest2].values*10000)
+		dataX = list(self.answer3[crime1].values*10000)
+		dataY = list(self.answer3[crime2].values*10000)
 		w = .3		
 		padding =.1
-		print dataX[:10]
 		
 		plt.scatter(dataX,dataY)
 		
-		ax.set_xlabel(crimeOfInterest, fontsize=15)
-		ax.set_ylabel(crimeOfInterest2, fontsize=15)
-		ax.set_title(crimeOfInterest + " and " + crimeOfInterest2 + " by State", fontsize=15)
+		ax.set_xlabel(self.crimeObj.get_full_name(crime1) , fontsize=15)
+		ax.set_ylabel(self.crimeObj.get_full_name(crime2) , fontsize=15)
+		ax.set_title(crime1 + " vs. " + crime2 + " by State ", fontsize=15)
 		ax.autoscale(tight=True)
 		
 		#labels
 		#http://stackoverflow.com/questions/5147112/matplotlib-how-to-put-individual-tags-for-a-scatter-plot
 		zippedData = zip(labels, dataX, dataY)
 		sortedByDistance = sorted(zippedData, key=lambda tup: tup[1]**2 +tup[2]**2 ,reverse=True)
-		numPointsToLabel =10
+		numPointsToLabel =6
 		for label, x, y in sortedByDistance[:numPointsToLabel]:
 			plt.annotate(label,xy = (x, y),xytext = (-5,5),textcoords = 'offset points',
 bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
@@ -239,13 +254,19 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		#add padding
 		plt.subplots_adjust(left=0.15,top=0.85)
 		plt.tight_layout()
-		plt.show()
+		plotName = "output/" + "scatter_"+crime1 + "by_" + crime2 + ".jpg"
+		
+		plt.savefig(plotName)
+		return plotName
 
 	def pieChart(self,data):
 		'''
 		input: dictionary, vals must be nonnegative
 		output: pieChart with alternating sizes of pieslices (to avoid overlapping of labels) 
 		'''
+
+		plt.close("all")
+
 		plt.figure(num=None, figsize=(8, 6), dpi=80, facecolor='w', edgecolor='k')
 
 		#ordering dictionary and then alternating big and small values
@@ -291,40 +312,7 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		plt.subplots_adjust(top=0.85)  #to fit the title without overlap
 		
 		plt.axis('equal') # Set aspect ratio to be equal so that pie is drawn as a circle.
-		plotName ="Pie_Crime_in_" + collegeName + ".png"
+		plotName = "output/" + "Pie_Crime_in_" + collegeName + ".png"
 		plt.savefig(plotName)
 
 		return plotName
-
-'''
-if __name__ == '__main__':
-	
-
-	self.pltparam = p.self.pltParam() #holds values specific to graphs like width, padding,fontsize
-
-	#a = handlers.average_crimes_per_student_by_category(dataframe, 'State', crimes_obj)	
-
-	
-	
-	college_name = "Harvard University"
-	college_instance = dataframe[dataframe.INSTNM == college_name]
-	crime_per_student, crimeObject = handlers.all_crimes_per_student_over_years("On Campus", "Crime", college_instance, crimes_obj)
-	
-	#for working with 2	
-	a,b = handlers.average_crimes_per_student("On Campus", "Crime", college_instance, crimes_obj)
-	#print a
-	#for working with 3 and 4
-	c,d = handlers.average_crimes_per_student_by_category(dataframe,"State", crimes_obj,overall_average=True)
-	
-	print "a ", a
-	#print "b ", b[0]
-
-	g=Answers(crimeObject,crime_per_student, a ,c )
-	
-	print 
-	g.simpleBarChart(g.answer3['BURGLA'])
-	#g.visualize_answer3()
-	#g.pieChart(a)
-
-	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112.csv")
-'''
