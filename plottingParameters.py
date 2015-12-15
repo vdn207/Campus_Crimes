@@ -27,7 +27,7 @@ class pltParam:
 		input is an integer, output is a list of distinct colors in rgb format.
 		
 		'''
-		if not isinstance(num_color,int):
+		if not isinstance(num_colors,int):
 				raise cexcep.WrongFormat("Input must be a integer")
 
 		colors=[]
