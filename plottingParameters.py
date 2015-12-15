@@ -13,8 +13,10 @@ import mikeCustomException as cexcep
 
 class pltParam:
 	'''
-	class to handle parameters for graphs
+	Includes several helper functions to generate graphs
+
 	'''
+	
 	def __init__(self):
 		self.width = .3
 		self.fontsize = 15
@@ -28,15 +30,20 @@ class pltParam:
 		
 		'''
 		if not isinstance(num_colors,int):
-				raise cexcep.WrongFormat("Input must be a integer")
-
+			raise cexcep.WrongFormat("Input must be a integer")
+		
 		colors=[]
-		for i in np.arange(0., 360., 360. / num_colors):
-		    hue = i/360.
-		    lightness = (50 + np.random.rand() * 10)/100.
-		    saturation = (90 + np.random.rand() * 10)/100.
-		    colors.append(colorsys.hls_to_rgb(hue, lightness, saturation))
-		return colors
+		try:
+			for i in np.arange(0., 360., 360. / num_colors):   #possible problem when num_colors =0 
+				hue = i/360.
+				lightness = (50 + np.random.rand() * 10)/100.
+				saturation = (90 + np.random.rand() * 10)/100.
+				colors.append(colorsys.hls_to_rgb(hue, lightness, saturation))
+			return colors
+		
+		except ZeroDivisionError :
+			print "We don't have any crime record on this college on this campus."
+			return None
 
 	def alternatingDictionary(self, unSortedDic):
 		'''
@@ -47,7 +54,7 @@ class pltParam:
 			if not isinstance(unSortedDic , pd.core.series.Series ):  #if its not a series throw error
 				raise cexcep.WrongFormat("Input must be a dictionary")
 			unSortedDic = unSortedDic.to_dict()  # if its series can convert to dictionary
-			
+		
 		sortedDic = OrderedDict(sorted(unSortedDic.items(), key=lambda t: t[1]))
 		keys = sortedDic.keys()
 		numKeys= len(keys)
@@ -56,10 +63,10 @@ class pltParam:
 		secondHalf=secondHalf[::-1]  #reverse order of second list
 		
 		target = []
-		for i in range(len(firstHalf)):
+		for i in range(len(firstHalf)):  #put back together 
 			target= target + [firstHalf[i]] + [secondHalf[i]]
 		
-		if numKeys%2==1:
+		if numKeys%2==1:  #if there is an odd number of keys then must add last element
 			target+= [secondHalf[-1]] 
 
 		return target
@@ -70,6 +77,10 @@ class pltParam:
 		input: int, output float
 		helper function for picking appropriate font size for graphs with ticks 
 		'''
+		if not isinstance(unSortedDic , pd.core.series.Series ):  #if its not a series throw error
+			raise cexcep.WrongFormat("Input must be an int")
+			return None
+
 		if numTicks <15:
 			return 15
 
