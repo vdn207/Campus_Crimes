@@ -47,7 +47,11 @@ def plotting1(path1,path2):
     img2 = ImageTk.PhotoImage(Image.open(path1))
     label2 = Label(root, image = img)
     label2.image = img # keep a reference!
+<<<<<<< HEAD
+    label2.grid(side = RIGHT) 
+=======
     label2.pack(side = RIGHT) 
+>>>>>>> upstream/master
 
     Button(root, text="BACK TO MAIN", command=quit).pack(side = BOTTOM)
 
@@ -58,5 +62,9 @@ def plotting1(path1,path2):
 
 
 if __name__ == '__main__':
+<<<<<<< HEAD
+    plotting1
+=======
     plotting1("histoByState.jpg","histoByState2.jpg")
 	
+>>>>>>> upstream/master

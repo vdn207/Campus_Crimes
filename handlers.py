@@ -36,6 +36,11 @@ def data_initialization(path):
 
 	return data_frame, crimes_obj
 
+def college_details(dataframe, university_name, branch_name):
+	'''Returns the row pertaining to the college and it's branch'''
+
+	return dataframe[(dataframe['BASIC']['INSTNM'] == university_name) & (dataframe['BASIC']['BRANCH'] == branch_name)]
+
 # Question 1
 def all_crimes_per_student_over_years(college_obj, crimes_obj, per_student = True, average = False):
 	'''

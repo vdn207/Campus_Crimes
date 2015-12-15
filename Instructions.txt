@@ -1,0 +1,74 @@
+THIS IS A MANUAL TO OPERATE THE DEVELOPED SOFTWARE
+
+Project: Campus Crime Analysis
+Team Members: Michael Higgins, Sean D'Rosario, Varun D N
+Contact: vdn207@nyu.edu
+
+DEPENDENCIES
+
+
+Steps to using the software:
+
+TO RUN THE PROGRAM: python main.py 		#### Command on the terminal
+
+
+When the program is started, a simple GUI with four options will appear.
+	Option 1: University Crime Explorer
+	Option 2: Universities Comparer
+	Option 3: Category Wise Crime
+	Option 4: Crime Comparisons
+
+The user has to choose one of the four following options. 
+
+Option 1: University Crime Explorer
+-----------------------------------
+This is an interface to choose a particular university of interest. There are 10,662 university campus details in the dataset. We provide a GUI which contains filters which can be used to narrow down the university choices. 
+
+We provide 2 different types of input: Direct Text Input and Drop Down Selection
+
+In both cases, we need the university names to be without a spelling mistake. In the case of drop down selection, the university names can't be changed and can only be selcted by the user.
+
+INPUT: 
+	Method 1: Select the university from the drop down list and press GO. If there are more than one branches, the user will be given an 
+			  option to choose the branch. After choosing the branch, press GO. Finally, press Search.
+	
+	Method 2: Use the 'State' filter and press GO. This will reduce the choices for you using the state you choose. Then, choose a 				  particular univeristy and press GO. If there are more than one branches, the user will be given an option to choose the			  branch. After choosing the branch, press GO. Finally, press Search.
+
+	Method 3: Use the 'Sector' filter and press GO. This will reduce the choices for you using the sector you choose. Then, choose a 			  particular univeristy and press GO. If there are more than one branches, the user will be given an option to choose the			  branch. After choosing the branch, press GO. Finally, press Search.
+
+	Method 4: This is not a fully functional feature yet. Use the text box to directly enter the univeristy name. This input is not case 		   sensitive. CAVEAT - Enter the name of the university without any spelling mistake and with only 1 space between words.
+
+OUTPUT:
+	An interface will appear with 2 images in it. One is a bar graph of number of crimes per student for each crime over the years 2010, 2011, 2012 in that particular univeristy. The other is a Pie chart of the average rate of crimes in that university over time the same three years mentioned above.
+
+
+Option 2: Universities Comparer
+-------------------------------
+This is an interface to choose two universities of interest to the user. 
+
+
+INPUT:
+	The input type for this interface is strictly text and the same conditions as above on the query should be folowed for a correct output. As the names of both universities are entered, the interface will ask for the specific branch and the user has to choose the specific branch. After the branches are chosen, press the Search button.
+
+OUTPUT:
+	An interface will appear with 2 columns containing 2 images each pertaining to the universities being compared. 
+
+Option 3: Category Wise Crime
+-----------------------------
+This is an interface to learn about the crimes pertaining to different categories. The two important categories in the dataset, State and Sector, are presented to the user and the user can choose any one of them.
+
+INPUT:
+	The user first chooses the category of interest: State or Sector. After the user presses the button, another drop down list containing the possible list of entities in each category is presented. The user has to choose an entity from that list and press the Search button. 
+
+OUTPUT:
+	The crime details pertaining to the entity belonging to the sector chosen is presented to the user in the form of a bar graph.
+
+Option 4: Crime Comparisons
+---------------------------
+This is an interface to explore the various behaviors of two crimes across the categories: State and Sector
+
+INPUT:
+	The user is provided with two drop down lists mentioning the crimes that are present in the dataset. After choosing the two crimes, press Search button.
+
+OUTPUT:
+	Two plots of the crime comparisons with respect to each category is presented to the user.

@@ -71,6 +71,7 @@ def gui(dataframe):
 
     def get_branches(uni_name):
         """Returns a list of branches corresponding to a university"""
+        #mask=(item.lower() for item in df['INSTNM'])==(uni_name.lower())
         mask=df['INSTNM']==uni_name
         subsetted_df = df[mask]
         return subsetted_df['BRANCH'].tolist()
@@ -79,7 +80,8 @@ def gui(dataframe):
     def button_press(str_parameter):
         """This function for what happens after GO is pressed"""
         if len(str_parameter)==0:
-            print "No input"
+            L1 = Label(root, text="No input detected",fg="red").grid()
+
         else:
             choices = get_branches(str_parameter)
 
@@ -92,6 +94,7 @@ def gui(dataframe):
                 button5.grid(row=4,column =1,columnspan=2,padx=10)
 
                 return None
+
 
             
 
@@ -252,7 +255,7 @@ def start_user_interface(dataframe):
         print "Error in GUI"
 
 #if __name__ == '__main__':
-    #start_user_interface(pd.read_csv("data/oncampuscrime101112.csv"))
+    #gui(pd.read_csv("data/oncampuscrime101112.csv"))
     #print get_branch()
     #print get_uni()
     
