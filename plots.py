@@ -1,4 +1,8 @@
-'''Class that contains all answers pertaining to a college'''
+'''
+author: Michael Higgins -mch529
+Class that generates all graphs
+
+'''
 
 import numpy as np 
 import pandas as pd 
@@ -6,6 +10,7 @@ import matplotlib.pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 import handlers
 import college
+import crimes
 import matplotlib.patches as mpatches
 import random
 from scipy.interpolate import interp1d
@@ -37,10 +42,7 @@ class Answers:
 		input is a tuple, the first entry is a dictionary with the crime as a key and the rate as a value
 		'''
 		#crimeFrequency , crimeObject = self.answer1
-		ax = plt.subplot(111)
-		w = .3		
-		padding =.1
-		fontsize=15
+		ax = plt.subplot(111)		
 
 		x = np.array(range(1, len(self.crimes_list) + 1))
 		
@@ -63,9 +65,9 @@ class Answers:
 		#set ticks and rotate text
 		plt.xticks([ a + self.pltparam.width/2 for a in  x],[name for name in self.crimeNames], rotation= 30, ha='right') 
 
-		ax.set_xlabel('Particular Crime by Year ', fontsize=fontsize)
-		ax.set_ylabel('Crime Rate (per 10,000 students)', fontsize=fontsize)
-		ax.set_title(self.collegeObj.get_college_name() + " Crime By Year ", fontsize=fontsize)
+		ax.set_xlabel('Particular Crime by Year ', fontsize=self.pltparam.fontsize)
+		ax.set_ylabel('Crime Rate (per 10,000 students)', fontsize=self.pltparam.fontsize)
+		ax.set_title(str(self.collegeObj.get_college_name()[0] )+ " Crime By Year ",fontsize=20)
 		ax.autoscale(tight=True)
  
 		#add 	padding
@@ -80,7 +82,7 @@ class Answers:
 		maxData=max(y_10+y_11+y_12)
 		plt.ylim(0,maxData * 1.15)
 		
-		for rects in [rect1,rect2,rect3]:
+		for rects in [rect1,rect2,rect3]:   
 			# attach some text labels
 			for rect in rects:
 				height = rect.get_height()
@@ -132,11 +134,13 @@ class Answers:
 		Note: aesthetically better if series is sorted 
 		output: barChart 
 		'''
+		if isinstance(data,dict): #convert to series if given input is dictionary
+			data= pd.Series(data)
+
 		data.sort()
+		
 		maskForEmptyBars = data <.00001
-		
-		data[ maskForEmptyBars]=.00001  
-		
+		data[ maskForEmptyBars]=.00001  #bars dont show up if values are 0 
 		
 		heights = (data * 10000).values  
 		labels = list(data.index)
@@ -147,7 +151,11 @@ class Answers:
 		rects = ax.bar(x, heights, width = self.pltparam.width, align='center')
 		
 		#set ticks and rotate text
-		plt.xticks([ a + self.pltparam.width/2 for a in  x],[name for name in labels], rotation= 90, ha='right', fontsize = self.pltparam.getTickFontSize(numBars) ) 
+		try:
+			plt.xticks([ a + self.pltparam.width/2 for a in  x],[name for name in labels], rotation= 90, ha='right', fontsize = self.pltparam.getTickFontSize(numBars) ) 
+		except cexcep.WrongFormat as er:
+			print er
+	
 		ax.set_xlabel('Particular Crime by Year ', fontsize=self.pltparam.fontsize)
 		ax.set_ylabel('Crime Rate (per 10,000 students)', fontsize=15)
 		ax.set_title(" Crime by " + str("State") , fontsize=15)
@@ -198,7 +206,6 @@ class Answers:
 		crimeOfInterest2 = 'BURGLA'
 		labels = list(self.answer3[crimeOfInterest].index.values)
 		numPoints= len( labels)
-		print numPoints
 		
 		fontSizeFunction = interp1d([5,75],[20,5])  #pick mapping for size of font
 		fontsize = 15		
@@ -236,15 +243,14 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		input: dictionary, vals must be nonnegative
 		output: pieChart with alternating sizes of pieslices (to avoid overlapping of labels) 
 		'''
-		plt.figure(num=None, figsize=(4, 4), dpi=80, facecolor='w', edgecolor='k')
+		plt.figure(num=None, figsize=(8, 6), dpi=80, facecolor='w', edgecolor='k')
 
 		#ordering dictionary and then alternating big and small values
 		keys= data.keys()
 		emptyKeys = [key for key in keys if data[key]<10**(-7) ]  #get names of keys that didnt occur
 		nonEmptyKeys = list(set(keys) - set(emptyKeys))   #clever way to take dif of two sets
 		numPieces = len(nonEmptyKeys)
-		
-		
+
 		sizes = [ data[key] for key in nonEmptyKeys ]  #remove empty crimes from values
 
 		#put back in dictionary form so that it will be accepted by alternatingDictionary
@@ -264,18 +270,29 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		except cexcep.WrongFormat as er:
 			print er
 		
+		
 		indexesToExplode=[0]
 		explode = [.03 for a in range(numPieces) ] # set default for slices to be slightly separated
-		for index in indexesToExplode:
-			explode[index]=.2
+		
+		if numPieces >0:		
+			for index in indexesToExplode:
+				explode[index]=.2
 			
+		longFormatCrimes=[self.crimeObj.get_full_name(crime) for crime in labels ]
 
-		plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%', shadow=True, startangle=90)
-		# Set aspect ratio to be equal so that pie is drawn as a circle.
-		plt.axis('equal')
-		plt.savefig("pie" + ".jpg")
-		return "pie" + ".jpg"
-			
+		plt.pie(sizes, explode=explode, labels=longFormatCrimes, colors=colors, autopct='%1.1f%%', shadow=True, startangle=90)
+		
+		collegeName = str(self.collegeObj.get_college_name()[0])
+
+		plt.title("Crime in " + collegeName , fontsize=20, y=1.08 )
+		plt.subplots_adjust(top=0.85)  #to fit the title without overlap
+		
+		plt.axis('equal') # Set aspect ratio to be equal so that pie is drawn as a circle.
+
+		plt.savefig("Crime_in_" + collegeName)
+		plt.show()
+		return "Crime_in_" + collegeName
+
 '''
 if __name__ == '__main__':
 	
