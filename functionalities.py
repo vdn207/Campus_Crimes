@@ -104,11 +104,11 @@ def interface(dataframe, crimes_obj):
 
 	elif user_feature_choice == 2:
 		multibar_plot_1, multibar_plot_2, pie_chart_1, pie_chart_2, university_name_1, branch_name_1, university_name_2, branch_name_2 = university_comparer(dataframe, crimes_obj)
-		plot2.plotting1(multibar_plot_1, multibar_plot_2, pie_chart_1, pie_chart_2, university_name_1, branch_name_1, university_name_2, branch_name_2)
+		plot2.plotting2(multibar_plot_1, multibar_plot_2, pie_chart_1, pie_chart_2, university_name_1, branch_name_1, university_name_2, branch_name_2)
 
 	elif user_feature_choice == 3:
 		bar_chart, specific_choice = category_wise_crime(dataframe, crimes_obj)
-		plot3.plotting2(bar_chart, specific_choice)
+		plot3.plotting3(bar_chart, specific_choice)
 
 	else:
 		crime_comparisons(dataframe, crimes_obj)
