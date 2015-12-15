@@ -236,7 +236,7 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		input: dictionary, vals must be nonnegative
 		output: pieChart with alternating sizes of pieslices (to avoid overlapping of labels) 
 		'''
-		figure(num=None, figsize=(4, 4), dpi=80, facecolor='w', edgecolor='k')
+		plt.figure(num=None, figsize=(4, 4), dpi=80, facecolor='w', edgecolor='k')
 
 		#ordering dictionary and then alternating big and small values
 		keys= data.keys()
@@ -264,14 +264,13 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		except cexcep.WrongFormat as er:
 			print er
 		
-		indexesToExplode=[1,3]
+		indexesToExplode=[0]
 		explode = [.03 for a in range(numPieces) ] # set default for slices to be slightly separated
 		for index in indexesToExplode:
 			explode[index]=.2
 			
 
-		plt.pie(sizes, explode=explode, labels=labels, colors=colors,
-			autopct='%1.1f%%', shadow=True, startangle=90)
+		plt.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%', shadow=True, startangle=90)
 		# Set aspect ratio to be equal so that pie is drawn as a circle.
 		plt.axis('equal')
 		plt.savefig("pie" + ".jpg")
@@ -283,7 +282,10 @@ if __name__ == '__main__':
 
 	self.pltparam = p.self.pltParam() #holds values specific to graphs like width, padding,fontsize
 
+	#a = handlers.average_crimes_per_student_by_category(dataframe, 'State', crimes_obj)	
 
+	
+	
 	college_name = "Harvard University"
 	college_instance = dataframe[dataframe.INSTNM == college_name]
 	crime_per_student, crimeObject = handlers.all_crimes_per_student_over_years("On Campus", "Crime", college_instance, crimes_obj)
