@@ -13,7 +13,7 @@ def data_initialization(path):
 	'''Initializes the initial data requirements of the system'''
 
 	try:
-		data_frame = pd.read_excel(path)
+		data_frame = pd.read_csv(path)
 
 	except IOError as IOE:
 		print str(IOE)
@@ -25,7 +25,7 @@ def data_initialization(path):
 
 	# Renaming columns. Using hierarchical indexing
 	actual_columns = data_frame.columns.values.tolist()
-	abstract_columns = ['BASIC'] * 12 + ['MURD', 'NEG_M', 'FORCIB', 'NONFOR', 'ROBBE', 'AGG_A', 'BURGLA', 'VEHIC', 'ARSON'] * 3 + ['FILTER'] * 3
+	abstract_columns = ['BASIC'] * 8 + ['MURD', 'NEG_M', 'FORCIB', 'NONFOR', 'ROBBE', 'AGG_A', 'BURGLA', 'VEHIC', 'ARSON'] * 3 + ['FILTER'] * 3
 
 	# Resetting the column names as a hierarchy
 	hierarchical_column_index = pd.MultiIndex.from_arrays([abstract_columns, actual_columns])	# PANDAS
