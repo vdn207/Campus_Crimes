@@ -161,14 +161,15 @@ class Answers:
 	
 		ax.set_xlabel('Particular Crime by Year ', fontsize=self.pltparam.fontsize)
 		ax.set_ylabel('Crime Rate (per 10,000 students)', fontsize=15)
-		ax.set_title(" Crime by " + str("State") , fontsize=15)
+		ax.set_title(" Crime by " + str(specificCategory) , fontsize=15)
 		ax.autoscale(tight=True)
 
 		#add padding
 		#plt.subplots_adjust(left=0.15,top=0.85)
 		plt.tight_layout()
-		#plt.savefig( 
-		plt.show()
+		plotName = str(specificCategory)+ "_answer1" + ".png"
+		plt.savefig(plotName) 
+		return plotName
 
 
 
@@ -197,41 +198,44 @@ class Answers:
 		#add padding
 		#plt.subplots_adjust(left=0.15,top=0.85)
 		plt.tight_layout()
-		#plt.savefig("histoByState" + ".jpg")
-		plt.show()
+		plotName =str(self.collegeObj.get_college_name()[0]) + "_answer1" + ".png"
+		plt.savefig(plotName) 
+		return plotName
 	
 	
 
-	def visualize_answer4(self):
-		'''scatterplot of two crimes circles are states'''
+	def visualize_answer4(self, crime1 , crime2 ):
+		'''
+		Inputs are short names for two crimes
+		saves scatterplot of two crimes circles are states and returns name of image
+		'''
 		ax = plt.subplot(111)
 		crimeOfInterest = 'FORCIB'
 		crimeOfInterest2 = 'BURGLA'
-		labels = list(self.answer3[crimeOfInterest].index.values)
+		labels = list(self.answer3[crime1].index.values)
 		numPoints= len( labels)
 		
 		fontSizeFunction = interp1d([5,75],[20,5])  #pick mapping for size of font
 		fontsize = 15		
 		fontsize= float( fontSizeFunction(numPoints) )
 		
-		dataX = list(self.answer3[crimeOfInterest].values*10000)
-		dataY = list(self.answer3[crimeOfInterest2].values*10000)
+		dataX = list(self.answer3[crime1].values*10000)
+		dataY = list(self.answer3[crime2].values*10000)
 		w = .3		
 		padding =.1
-		print dataX[:10]
 		
 		plt.scatter(dataX,dataY)
 		
-		ax.set_xlabel(crimeOfInterest, fontsize=15)
-		ax.set_ylabel(crimeOfInterest2, fontsize=15)
-		ax.set_title(crimeOfInterest + " and " + crimeOfInterest2 + " by State", fontsize=15)
+		ax.set_xlabel(self.crimeObj.get_full_name(crime1) , fontsize=15)
+		ax.set_ylabel(self.crimeObj.get_full_name(crime2) , fontsize=15)
+		ax.set_title(crime1 + " vs. " + crime2 + " by State ", fontsize=15)
 		ax.autoscale(tight=True)
 		
 		#labels
 		#http://stackoverflow.com/questions/5147112/matplotlib-how-to-put-individual-tags-for-a-scatter-plot
 		zippedData = zip(labels, dataX, dataY)
 		sortedByDistance = sorted(zippedData, key=lambda tup: tup[1]**2 +tup[2]**2 ,reverse=True)
-		numPointsToLabel =10
+		numPointsToLabel =6
 		for label, x, y in sortedByDistance[:numPointsToLabel]:
 			plt.annotate(label,xy = (x, y),xytext = (-5,5),textcoords = 'offset points',
 bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
@@ -239,7 +243,9 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		#add padding
 		plt.subplots_adjust(left=0.15,top=0.85)
 		plt.tight_layout()
-		plt.show()
+		plotName = "scatter_"+crime1 + "by_" + crime2 + ".jpg"
+		plt.savefig(plotName)
+		return plotName
 
 	def pieChart(self,data):
 		'''
