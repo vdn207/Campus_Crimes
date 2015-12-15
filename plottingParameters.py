@@ -105,7 +105,7 @@ class pltParam:
 			output = output.set_value(key, (data[key])[category] )
 		return output
 		
-'''	
+
 			
 
 if __name__ == '__main__':
@@ -130,4 +130,4 @@ if __name__ == '__main__':
 
 	answers_obj.simpleBarChart(d,"MA")
 
-'''
+
