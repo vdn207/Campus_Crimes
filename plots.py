@@ -12,7 +12,7 @@ from scipy.interpolate import interp1d
 import plottingParameters as p
 import random
 
-import MikeCustomException as cexcep
+import mikeCustomException as cexcep
 from collections import OrderedDict
 
 
