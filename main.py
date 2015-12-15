@@ -16,8 +16,12 @@ import plottingParameters as plotting
 if __name__ == '__main__':
 	'''The main program running the software'''
 
+<<<<<<< HEAD
+	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112_cleaned.csv")
+=======
 	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112.xls")
 
+>>>>>>> upstream/master
 	GUI.start_user_interface(dataframe)
 	university_name = GUI.get_uni()
 	branch_name = GUI.get_branch()
