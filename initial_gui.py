@@ -56,6 +56,9 @@ def initial_gui():
 	root = Tk()
 	result = 0
 
+	def quit():
+		root.quit()
+
 
 	#The next 4 lines output a string
 	var = StringVar()
@@ -79,8 +82,14 @@ def initial_gui():
 	button2 = Button(text="Compare two universities", command=option2, fg="blue")
 	button2.grid(row=4,column=1,pady = 10)
 
-	button2 = Button(text="View stats by Crimes", command=option3, fg="blue")
-	button2.grid(row=5,column=1,pady = 10)
+	button3 = Button(text="Veiw crimes by category", command=option3, fg="blue")
+	button.grid(row=5,column=1,pady = 10)
+
+	button4 = Button(text="Compare stats of two crimes", command=option4, fg="blue")
+	button4.grid(row=6,column=1,pady = 10)
+
+	quit_button =Button(text="QUIT", command=quit, fg="blue")
+	quit_button.grid(row=6,column=1,pady = 20)
 
 	app = Window(root)
 	root.mainloop()
@@ -109,6 +118,14 @@ def option3():
 	result =3
 	global root
 	root.destroy()
+
+def option3():
+	'''Sets the value of result to 4 and quits the GUI'''
+	global result
+	result =4
+	global root
+	root.destroy()
+
 
 def get_result():
 	return result
