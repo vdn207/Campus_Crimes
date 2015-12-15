@@ -42,6 +42,9 @@ class Answers:
 		input is a tuple, the first entry is a dictionary with the crime as a key and the rate as a value
 		'''
 		#crimeFrequency , crimeObject = self.answer1
+
+		plt.close("all")
+
 		ax = plt.subplot(111)		
 
 		x = np.array(range(1, len(self.crimes_list) + 1))
@@ -91,7 +94,7 @@ class Answers:
 				        '%.1f' % height,
 				        ha='center', va='bottom')
 		plt.tight_layout()
-		plotName =str(self.collegeObj.get_college_name()[0]) + "_answer1" + ".png"
+		plotName =str("output/" + self.collegeObj.get_college_name()[0]) + "_answer1" + ".png"
 		plt.savefig(plotName) 
 		return plotName
 
@@ -137,6 +140,9 @@ class Answers:
 		Note: aesthetically better if series is sorted 
 		output: barChart 
 		'''
+
+		plt.close("all")
+
 		# wrangle data to get info of interest
 		data = self.pltparam.subsetDictionary(data , specificCategory)
 			
@@ -167,13 +173,16 @@ class Answers:
 		#add padding
 		#plt.subplots_adjust(left=0.15,top=0.85)
 		plt.tight_layout()
-		plotName = str(specificCategory)+ "_answer1" + ".png"
+		plotName = "output/" + str(specificCategory)+ "_answer1" + ".png"
 		plt.savefig(plotName) 
 		return plotName
 
 
 
 	def visualize_answer3(self):
+
+		plt.close("all")
+
 		ax = plt.subplot(111)
 		crimeOfInterest = 'BURGLA'
 		categories = self.answer3[crimeOfInterest].index.values
@@ -198,7 +207,7 @@ class Answers:
 		#add padding
 		#plt.subplots_adjust(left=0.15,top=0.85)
 		plt.tight_layout()
-		plotName =str(self.collegeObj.get_college_name()[0]) + "_answer1" + ".png"
+		plotName = "output/" + str(self.collegeObj.get_college_name()[0]) + "_answer1" + ".png"
 		plt.savefig(plotName) 
 		return plotName
 	
@@ -209,6 +218,8 @@ class Answers:
 		Inputs are short names for two crimes
 		saves scatterplot of two crimes circles are states and returns name of image
 		'''
+		plt.close("all")
+
 		ax = plt.subplot(111)
 		crimeOfInterest = 'FORCIB'
 		crimeOfInterest2 = 'BURGLA'
@@ -243,7 +254,8 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		#add padding
 		plt.subplots_adjust(left=0.15,top=0.85)
 		plt.tight_layout()
-		plotName = "scatter_"+crime1 + "by_" + crime2 + ".jpg"
+		plotName = "output/" + "scatter_"+crime1 + "by_" + crime2 + ".jpg"
+		
 		plt.savefig(plotName)
 		return plotName
 
@@ -252,6 +264,9 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		input: dictionary, vals must be nonnegative
 		output: pieChart with alternating sizes of pieslices (to avoid overlapping of labels) 
 		'''
+
+		plt.close("all")
+
 		plt.figure(num=None, figsize=(8, 6), dpi=80, facecolor='w', edgecolor='k')
 
 		#ordering dictionary and then alternating big and small values
@@ -297,40 +312,7 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		plt.subplots_adjust(top=0.85)  #to fit the title without overlap
 		
 		plt.axis('equal') # Set aspect ratio to be equal so that pie is drawn as a circle.
-		plotName ="Pie_Crime_in_" + collegeName + ".png"
+		plotName = "output/" + "Pie_Crime_in_" + collegeName + ".png"
 		plt.savefig(plotName)
 
 		return plotName
-
-'''
-if __name__ == '__main__':
-	
-
-	self.pltparam = p.self.pltParam() #holds values specific to graphs like width, padding,fontsize
-
-	#a = handlers.average_crimes_per_student_by_category(dataframe, 'State', crimes_obj)	
-
-	
-	
-	college_name = "Harvard University"
-	college_instance = dataframe[dataframe.INSTNM == college_name]
-	crime_per_student, crimeObject = handlers.all_crimes_per_student_over_years("On Campus", "Crime", college_instance, crimes_obj)
-	
-	#for working with 2	
-	a,b = handlers.average_crimes_per_student("On Campus", "Crime", college_instance, crimes_obj)
-	#print a
-	#for working with 3 and 4
-	c,d = handlers.average_crimes_per_student_by_category(dataframe,"State", crimes_obj,overall_average=True)
-	
-	print "a ", a
-	#print "b ", b[0]
-
-	g=Answers(crimeObject,crime_per_student, a ,c )
-	
-	print 
-	g.simpleBarChart(g.answer3['BURGLA'])
-	#g.visualize_answer3()
-	#g.pieChart(a)
-
-	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112.csv")
-'''

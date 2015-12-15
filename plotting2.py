@@ -29,9 +29,8 @@ class Window(Frame):
 
     def initUI(self):
 
-        self.parent.title("Comparison of {0}".format(uni_name))
+        self.parent.title("Comparison of crimes between {0} - {1}  and {2} - {3}".format(uni_name1,branch_name1,uni_name2,branch_name2))
         self.grid()
-
 
 
 
@@ -42,16 +41,16 @@ def plotting1(path1,path2,path3,path4,uni_name1_param,branch_name1_param,uni_nam
     root = Tk()
     
     global uni_name1
-    uni_name1 = uni_name_param1
+    uni_name1 = uni_name1_param
 
     global branch_name1
-    branch_name1 = branch_name_param1
+    branch_name1 = branch_name1_param
 
     global uni_name2
-    uni_name2 = uni_name_param2
+    uni_name2 = uni_name2_param
 
     global branch_name2
-    branch_name2 = branch_name_param2
+    branch_name2 = branch_name2_param
 
     
 
@@ -89,7 +88,7 @@ def plotting1(path1,path2,path3,path4,uni_name1_param,branch_name1_param,uni_nam
 
     img3 = Image.open(path3)
     img3 = img3.resize((600, 450), PIL.Image.ANTIALIAS) #Resizing the image to 600x450
-    img3 = ImageTk.PhotoImage(img1)
+    img3 = ImageTk.PhotoImage(img3)
     label3 = Label(root, image = img3)
     label3.image = img3 # keep a reference of the image
     label1.grid(row = 2,column =0,pady=20,padx=20)

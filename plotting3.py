@@ -29,7 +29,7 @@ class Window(Frame):
 
     def initUI(self):
 
-        self.parent.title("Stats of all crimes for universities belonging to {0}".format(uni_name))
+        self.parent.title("Stats of all crimes for universities belonging to {0}".format(choice2))
         self.grid()
 
 
@@ -41,7 +41,7 @@ def plotting2(path1,choice2_param):
     
     root = Tk()
     
-    global choice2_param
+    global choice2
     choice2 = choice2_param
 
     
