@@ -29,6 +29,7 @@ import matplotlib.pyplot as plt
 
 
 global result
+root = None
 
 class Window(Frame):
 
@@ -90,6 +91,7 @@ def option1():
 	'''Sets the value of result to 1 and quits the GUI'''
 	global result
 	result =1
+	global root
 	root.quit()
 
 
@@ -97,6 +99,7 @@ def option2():
 	'''Sets the value of result to 2 and quits the GUI'''
 	global result
 	result =2
+	global root
 	root.quit()
 
 
@@ -104,12 +107,10 @@ def option3():
 	'''Sets the value of result to 3 and quits the GUI'''
 	global result
 	result =3
+	global root
 	root.quit()
 
 def get_result():
 	return result
 
-if __name__ == '__main__':
-	initial_gui()
-	
 	

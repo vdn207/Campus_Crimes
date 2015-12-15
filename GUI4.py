@@ -110,16 +110,8 @@ def gui():
     app = Window(root)
     root.mainloop()
 
-
-
-
-
-
 def get_crimes():
     return crime_1,crime_2
-
-
-
 
 
 def start_user_interface():
@@ -127,8 +119,3 @@ def start_user_interface():
         gui()
     except:
         print "Error in GUI"
-
-#if __name__ == '__main__':
-    #gui()
-    #print get_crimes()
-    

@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 
 University_name = ""
 branch_name = ""
-
+root = None
 
 class Window(Frame):
 
@@ -45,7 +45,7 @@ def gui(dataframe):
 
 
     df = dataframe['BASIC']
-
+    global root
     root = Tk()
 
     def quit():
@@ -187,18 +187,7 @@ def get_uni2():
 def get_branch2():
     return branch_name2
 
-
-
-
-
 def start_user_interface(dataframe):
     gui(dataframe)
     
-
-#if __name__ == '__main__':
-    #start_user_interface(pd.read_csv("data/oncampuscrime101112.csv"))
-    #print get_uni1()
-    #print get_uni2()
-    #print get_branch1()
-    #print get_branch2()
     
