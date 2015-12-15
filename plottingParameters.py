@@ -2,7 +2,9 @@
 author: Michael Higgins
 
 '''
-		
+import handlers
+import plots
+import college as coll
 import numpy as np
 import pandas as pd
 import colorsys
@@ -90,18 +92,42 @@ class pltParam:
 		fontsize= float( fontSizeFunction(numTicks) )
 		return fontsize
 
-
+	
+	def subsetDictionary(self, data , category):
+		'''
+		input is dictionary with crimes as keys, Series as values.  Need to extract the
+		index that is category.
+		returns Series
+		'''
+		output= pd.Series()
+	
+		for key in data.keys():
+			output = output.set_value(key, (data[key])[category] )
+		return output
+		
+'''	
+			
 
 if __name__ == '__main__':
 	p = pltParam()
-	print p.alternatingDictionary(7)
-	#print p.getTickFontSize(22)
-	#a = pd.Series([3,4])
-	b = {"a":3}
-	print isinstance(b,dict)
+
+	university_name= "Harvard University"
+
+	branch_name = "Main Campus"
+	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112_cleaned.csv")
+	college_instance = handlers.college_details(dataframe, university_name, branch_name)
+	college_obj = coll.College(college_instance, crimes_obj)
+	crime_per_student_without_average = handlers.all_crimes_per_student_over_years(college_obj, crimes_obj) # Question 1
+	crime_per_student_with_average = handlers.all_crimes_per_student_over_years(college_obj, crimes_obj, average=True) # Question 2
+	crimes_per_student_by_category = handlers.average_crimes_per_student_by_category(dataframe, 'State', crimes_obj) # Question 3
+	pltparam = plotting.pltParam()
+	answers_obj = plots.Answers(crimes_obj, college_obj, pltparam, crime_per_student_without_average, crime_per_student_with_average, crimes_per_student_by_category)
 
 
+	d = handlers.average_crimes_per_student_by_category(dataframe, 'State' ,crimes_obj, overall_average = True)
+	
+	
 
+	answers_obj.simpleBarChart(d,"MA")
 
-
-
+'''
