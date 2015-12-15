@@ -138,7 +138,7 @@ class Answers:
 		output: barChart 
 		'''
 		# wrangle data to get info of interest
-		data = subsetDictionary(self, data , specificCategory)
+		data = self.pltparam.subsetDictionary(data , specificCategory)
 			
 		data.sort()
 		

@@ -57,13 +57,17 @@ def university_comparer(dataframe, crimes_obj):
 	university_crime_explorer(dataframe, crimes_obj, university_name_1, branch_name_1, False)
 	university_crime_explorer(dataframe, crimes_obj, university_name_2, branch_name_2, False)
 
-def category_wise_crime(dataframe):
+def category_wise_crime(dataframe, crimes_obj):
 	'''Handles the functionalities of crimes by different categories'''
 
 	GUI3.start_user_interface(dataframe)
 	category, specific_choice = GUI3.get_choices()
 	crimes_per_student_by_category = handlers.average_crimes_per_student_by_category(dataframe, category, crimes_obj, overall_average = True)
 
+	pltparam = plotting.pltParam()
+	answers_obj = plots.Answers(crimes_obj, None, pltparam, None, None, None)
+
+	answers_obj.simpleBarChart(crimes_per_student_by_category, specific_choice)
 
 def crime_comparisons():
 	'''Handles the functionalities of different crime comparisons'''
@@ -81,13 +85,13 @@ def interface(dataframe, crimes_obj):
 		print "Enter"
 		multibar_plot, pie_chart = university_crime_explorer(dataframe, crimes_obj, "", "", True)
 		print multibar_plot, pie_chart
-		#plot1.plotting1(multibar_plot, pie_chart, university_name)
+		#plot1.plotting1("pie.jpg", pie_chart, "blue shit", "guihg")
 
 	elif user_feature_choice == 2:
 		university_comparer(dataframe, crimes_obj)
 
 	elif user_feature_choice == 3:
-		category_wise_crime(dataframe)
+		category_wise_crime(dataframe, crimes_obj)
 
 	else:
 		crime_comparisons()
