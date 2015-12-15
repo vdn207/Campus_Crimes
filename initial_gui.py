@@ -92,7 +92,7 @@ def option1():
 	global result
 	result =1
 	global root
-	root.quit()
+	root.destroy()
 
 
 def option2():
@@ -100,7 +100,7 @@ def option2():
 	global result
 	result =2
 	global root
-	root.quit()
+	root.destroy()
 
 
 def option3():
@@ -108,7 +108,7 @@ def option3():
 	global result
 	result =3
 	global root
-	root.quit()
+	root.destroy()
 
 def get_result():
 	return result

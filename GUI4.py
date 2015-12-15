@@ -95,10 +95,6 @@ def gui():
         else:
             quit()
 
-
-
-        
-    
     #BUTTON
     GO_button = Button(text="GO", command=go, fg="blue")
     GO_button.grid(row=3,column =1,columnspan=3,pady=10,padx=10)

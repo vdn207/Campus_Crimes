@@ -142,14 +142,8 @@ def gui(dataframe):
     root.mainloop()
 
 
-
-
 def get_choices():
     return choice_1,choice_2
-
-
-
-
 
 def start_user_interface(dataframe):
     
@@ -157,8 +151,4 @@ def start_user_interface(dataframe):
         gui(dataframe)
     except:
         print "Error in GUI"
-
-#if __name__ == '__main__':
-    #gui(pd.read_csv("data/oncampuscrime101112.csv"))
-    #print get_choices()
     

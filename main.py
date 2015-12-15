@@ -69,17 +69,19 @@ if __name__ == '__main__':
 
 	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112_cleaned.csv")
 
-	igui.initial_gui()
-	user_feature_choice = igui.get_result()
+	while True:
+		igui.initial_gui()
+		user_feature_choice = igui.get_result()
 
-	if user_feature_choice == 1:
-		university_crime_explorer(dataframe)
+		if user_feature_choice == 1:
+			print "Enter"
+			university_crime_explorer(dataframe)
 
-	elif user_feature_choice == 2:
-		university_comparer(dataframe)
+		elif user_feature_choice == 2:
+			university_comparer(dataframe)
 
-	elif user_feature_choice == 3:
-		category_wise_crime(dataframe)
+		elif user_feature_choice == 3:
+			category_wise_crime(dataframe)
 
-	else:
-		crime_comparisons()
+		else:
+			crime_comparisons()
