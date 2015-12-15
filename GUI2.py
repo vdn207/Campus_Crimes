@@ -1,8 +1,3 @@
-__author__ = 'Sean D Rosario'
-
-
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
 
 """
 Author: Sean D Rosario
@@ -23,11 +18,10 @@ from math import *
 import pandas as pd
 import numpy as np
 from PIL import Image, ImageTk
-#import Image, ImageTk
 import matplotlib.pyplot as plt
 
-global University_name
-global branch_name
+University_name = ""
+branch_name = ""
 
 
 class Window(Frame):
@@ -50,7 +44,7 @@ class Window(Frame):
 def gui(dataframe):
 
 
-    df = dataframe#['BASIC']
+    df = dataframe['BASIC']
 
     root = Tk()
 
@@ -201,10 +195,10 @@ def start_user_interface(dataframe):
     gui(dataframe)
     
 
-if __name__ == '__main__':
-    start_user_interface(pd.read_csv("data/oncampuscrime101112.csv"))
-    print get_uni1()
-    print get_uni2()
-    print get_branch1()
-    print get_branch2()
+#if __name__ == '__main__':
+    #start_user_interface(pd.read_csv("data/oncampuscrime101112.csv"))
+    #print get_uni1()
+    #print get_uni2()
+    #print get_branch1()
+    #print get_branch2()
     
