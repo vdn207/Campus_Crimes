@@ -17,8 +17,6 @@ if __name__ == '__main__':
 	'''The main program running the software'''
 
 	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112_cleaned.csv")
-	print dataframe.shape
-	print dataframe.columns.values
 
 	GUI.start_user_interface(dataframe)
 	university_name = GUI.get_uni()
@@ -36,5 +34,5 @@ if __name__ == '__main__':
 	pltparam = plotting.pltParam()
 	answers_obj = plots.Answers(crimes_obj, college_obj, pltparam, crime_per_student_without_average, crime_per_student_with_average, crime_per_student_with_average)
 
-	answers_obj.visualize_answer1()
-	answers_obj.pieChart(crime_per_student_with_average)
+	#answers_obj.visualize_answer1()
+	answers_obj.pieChart(crime_per_student_with_average)	
