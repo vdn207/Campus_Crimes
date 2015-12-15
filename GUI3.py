@@ -24,6 +24,7 @@ import matplotlib.pyplot as plt
 
 
 class Window(Frame):
+    """This class initializes the frame of the GUI and sets the title of the window"""
 
     def __init__(self, parent):
         Frame.__init__(self, parent, background="white")
@@ -48,7 +49,7 @@ def gui(dataframe):
     df = dataframe['BASIC']
 
     def quit():
-        root.quit()
+        root.destroy()
 
     root = Tk()
 

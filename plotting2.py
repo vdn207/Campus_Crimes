@@ -10,10 +10,14 @@ from PIL import Image, ImageTk
 import matplotlib.pyplot as plt
 
 
-uni_name = ""
-branch_name = ""
+uni_name1 = ""
+branch_name1 = ""
+
+uni_name2 = ""
+branch_name2 = ""
 
 class Window(Frame):
+    """This class initializes the frame of the GUI and sets the title of the window"""
 
     def __init__(self, parent):
         Frame.__init__(self, parent, background="white")
@@ -25,27 +29,34 @@ class Window(Frame):
 
     def initUI(self):
 
-        self.parent.title("Crime details of {0}".format(uni_name))
+        self.parent.title("Comparison of {0}".format(uni_name))
         self.grid()
 
 
 
 
 
-def plotting1(path1,path2,uni_name_param,branch_name_param):
+def plotting1(path1,path2,path3,path4,uni_name1_param,branch_name1_param,uni_name2_param,branch_name2_param):
+    """Displys the two saved plots for two university and its respective branches in a GUI"""
     
     root = Tk()
     
-    global uni_name
-    uni_name = uni_name_param
+    global uni_name1
+    uni_name1 = uni_name_param1
 
-    global branch_name
-    branch_name = branch_name_param
+    global branch_name1
+    branch_name1 = branch_name_param1
+
+    global uni_name2
+    uni_name2 = uni_name_param2
+
+    global branch_name2
+    branch_name2 = branch_name_param2
 
     
 
     def quit():
-        root.quit()
+        root.destroy()
 
 
 
@@ -70,6 +81,29 @@ def plotting1(path1,path2,uni_name_param,branch_name_param):
     label2 = Label(root, image = img2)
     label2.image = img2 # keep a reference of the image
     label2.grid(row=1,column=1,pady=10,padx=20)
+
+
+    #
+    # Displays the third image (stored in path3) after resizing it
+    #
+
+    img3 = Image.open(path3)
+    img3 = img3.resize((600, 450), PIL.Image.ANTIALIAS) #Resizing the image to 600x450
+    img3 = ImageTk.PhotoImage(img1)
+    label3 = Label(root, image = img3)
+    label3.image = img3 # keep a reference of the image
+    label1.grid(row = 2,column =0,pady=20,padx=20)
+
+
+    #
+    # Displays the fourth image (stored in path4) after resizing it
+    #
+    img4 = Image.open(path4)
+    img4 = img4.resize((600, 450), PIL.Image.ANTIALIAS) #Resizing the image to 600x450
+    img4 = ImageTk.PhotoImage(img4)
+    label4 = Label(root, image = img4)
+    label4.image = img4 # keep a reference of the image
+    label4.grid(row=2,column=1,pady=20,padx=20)
 
     Button(root, text="DONE",width = 20, command=quit).grid(row=4,columnspan = 2,pady=10)#.pack(side = BOTTOM)
 

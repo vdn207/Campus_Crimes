@@ -27,6 +27,7 @@ crime_2 = ""
 
 
 class Window(Frame):
+    """This class initializes the frame of the GUI and sets the title of the window"""
 
     def __init__(self, parent):
         Frame.__init__(self, parent, background="grey")
@@ -49,7 +50,7 @@ def gui():
     root = Tk()
 
     def quit():
-        root.quit()
+        root.destroy()
 
     #The next 4 lines output a string
     var1 = StringVar()
