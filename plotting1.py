@@ -48,6 +48,11 @@ def plotting1(path1,path2,uni_name_param,branch_name_param):
         root.quit()
 
 
+<<<<<<< HEAD
+=======
+    img1 = Image.open(path1)
+    img1 = img1.resize((600, 450), PIL.Image.ANTIALIAS)
+>>>>>>> upstream/master
 
     #
     # Displays the first image (stored in path1) after resizing it

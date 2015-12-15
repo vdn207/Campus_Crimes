@@ -28,6 +28,7 @@ branch_name = ""
 branch_input = None
 
 class Window(Frame):
+    """This class initializes the frame of the GUI and sets the title of the window"""
 
     def __init__(self, parent):
         Frame.__init__(self, parent, background="white")

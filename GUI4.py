@@ -27,7 +27,6 @@ crime_2 = ""
 
 
 class Window(Frame):
-    """This class initializes the frame of the GUI and sets the title of the window"""
 
     def __init__(self, parent):
         Frame.__init__(self, parent, background="grey")
@@ -50,7 +49,7 @@ def gui():
     root = Tk()
 
     def quit():
-        root.destroy()
+        root.quit()
 
     #The next 4 lines output a string
     var1 = StringVar()
@@ -96,6 +95,10 @@ def gui():
         else:
             quit()
 
+
+
+        
+    
     #BUTTON
     GO_button = Button(text="GO", command=go, fg="blue")
     GO_button.grid(row=3,column =1,columnspan=3,pady=10,padx=10)
@@ -107,8 +110,16 @@ def gui():
     app = Window(root)
     root.mainloop()
 
+
+
+
+
+
 def get_crimes():
     return crime_1,crime_2
+
+
+
 
 
 def start_user_interface():
@@ -116,3 +127,8 @@ def start_user_interface():
         gui()
     except:
         print "Error in GUI"
+
+#if __name__ == '__main__':
+    #gui()
+    #print get_crimes()
+    

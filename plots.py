@@ -64,7 +64,8 @@ class Answers:
 		
 		#set ticks and rotate text
 		plt.xticks([ a + self.pltparam.width/2 for a in  x],[name for name in self.crimeNames], rotation= 30, ha='right') 
-
+		
+		
 		ax.set_xlabel('Particular Crime by Year ', fontsize=self.pltparam.fontsize)
 		ax.set_ylabel('Crime Rate (per 10,000 students)', fontsize=self.pltparam.fontsize)
 		ax.set_title(str(self.collegeObj.get_college_name()[0] )+ " Crime By Year ",fontsize=20)
@@ -90,7 +91,9 @@ class Answers:
 				        '%.1f' % height,
 				        ha='center', va='bottom')
 		plt.tight_layout()
-		plt.show()
+		plotName =str(self.collegeObj.get_college_name()[0]) + "_answer1" + ".png"
+		plt.savefig(plotName) 
+		return plotName
 
 
 
@@ -128,15 +131,15 @@ class Answers:
 		plt.show()
 
 
-	def simpleBarChart(self,data):
+	def simpleBarChart(self,data, specificCategory):
 		'''
-		input: Series, vals must be nonnegative 
+		input: dictionary with keys as crimes and series with state / sector as index, vals are rate
 		Note: aesthetically better if series is sorted 
 		output: barChart 
 		'''
-		if isinstance(data,dict): #convert to series if given input is dictionary
-			data= pd.Series(data)
-
+		# wrangle data to get info of interest
+		data = subsetDictionary(self, data , specificCategory)
+			
 		data.sort()
 		
 		maskForEmptyBars = data <.00001
@@ -164,7 +167,7 @@ class Answers:
 		#add padding
 		#plt.subplots_adjust(left=0.15,top=0.85)
 		plt.tight_layout()
-		print "plt.xlim ", plt.xlim
+		#plt.savefig( 
 		plt.show()
 
 
@@ -288,10 +291,10 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		plt.subplots_adjust(top=0.85)  #to fit the title without overlap
 		
 		plt.axis('equal') # Set aspect ratio to be equal so that pie is drawn as a circle.
+		plotName ="Pie_Crime_in_" + collegeName + ".png"
+		plt.savefig(plotName)
 
-		plt.savefig("Crime_in_" + collegeName)
-		plt.show()
-		return "Crime_in_" + collegeName
+		return plotName
 
 '''
 if __name__ == '__main__':
