@@ -13,7 +13,7 @@ import initial_gui as igui
 import GUI2
 import GUI3
 import GUI4
-import plotting1 as plot1
+#import plotting1 as plot1
 
 def get_university_crime_details_and_plot(dataframe, college_obj, crimes_obj):
 	'''Computes and generates the plots for the university'''
@@ -43,7 +43,7 @@ def university_crime_explorer(dataframe, crimes_obj, university_name, branch_nam
 	college_instance = handlers.college_details(dataframe, university_name, branch_name)
 	college_obj = coll.College(college_instance, crimes_obj)
 
-	return get_university_crime_details_and_plot(dataframe, college_obj, crimes_obj), university_name
+	return get_university_crime_details_and_plot(dataframe, college_obj, crimes_obj)
 
 def university_comparer(dataframe, crimes_obj):
 	'''Handles the functionalities of University Comparer feature'''
@@ -79,9 +79,9 @@ def interface(dataframe, crimes_obj):
 
 	if user_feature_choice == 1:
 		print "Enter"
-		multibar_plot, pie_chart, university_name = university_crime_explorer(dataframe, crimes_obj, "", "", True)
-		print multibar_plot, pie_chart, university_name
-		plot1.plotting1(multibar_plot, pie_chart, university_name)
+		multibar_plot, pie_chart = university_crime_explorer(dataframe, crimes_obj, "", "", True)
+		print multibar_plot, pie_chart
+		#plot1.plotting1(multibar_plot, pie_chart, university_name)
 
 	elif user_feature_choice == 2:
 		university_comparer(dataframe, crimes_obj)
