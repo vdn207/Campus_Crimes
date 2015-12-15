@@ -25,6 +25,7 @@ branch_name = ""
 
 
 class Window(Frame):
+    """This class defines the frame of the gui and sets the title of the window"""
 
     def __init__(self, parent):
         Frame.__init__(self, parent, background="white")
@@ -49,7 +50,7 @@ def gui(dataframe):
     root = Tk()
 
     def quit():
-        root.quit()
+        root.destroy()
     
     
     #The next 4 lines output a string
