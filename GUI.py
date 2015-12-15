@@ -1,6 +1,3 @@
-__author__ = 'Sean D Rosario'
-
-
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
@@ -23,12 +20,12 @@ from math import *
 import pandas as pd
 import numpy as np
 from PIL import Image, ImageTk
-#import Image, ImageTk
 import matplotlib.pyplot as plt
 
 University_name = ""
 branch_name = ""
 
+branch_input = None
 
 class Window(Frame):
 
@@ -84,16 +81,27 @@ def gui(dataframe):
         if len(str_parameter)==0:
             print "No input"
         else:
+            choices = get_branches(str_parameter)
 
-            L2 = Label(root, text="Pick a branch:")
+            if len(choices)==1:
+                set_branch(choices[0])
+                Quit_button.grid_remove()
+
+                #BUTTON
+                button5 = Button(text="SEARCH", command=quit, fg="blue")
+                button5.grid(row=4,column =1,columnspan=2,padx=10)
+
+                return None
+
+            
+
+            global branch_input
+            branch_input = StringVar(root)
+            branch_input.set('None selected')
+            L2 = Label(root, text="Pick a branch for {0} :".format(get_uni()))
             L2.grid(pady=10,row=3,sticky=W)
             
-            #Text box
-            choices = get_branches(str_parameter)
-            global var4
-            var4 = StringVar(root)
-            var4.set('None selected')
-            drop = OptionMenu(root,var4,*choices)
+            drop = OptionMenu(root,branch_input,*choices)
             drop.grid(row=3,column=1)
 
             button5 = Button(text="GO", command=branch_GO, fg="blue")
@@ -103,8 +111,7 @@ def gui(dataframe):
     
     def branch_GO():
         """This function for what happens after GO is pressed after the branch is chosen"""
-        branch_name = str(var4.get())
-        #print "Yo boy", University_name, branch_name
+        branch_name = str(branch_input.get())
         
         set_branch(branch_name)
         Quit_button.grid_remove()
@@ -128,10 +135,10 @@ def gui(dataframe):
     
     def text_GO():
         """This function is for the GO button for Text box input"""
-        button_press(str(user_input.get()))
         set_uni(str(user_input.get()))
-        #University_name = str(user_input.get())
         remove_elements()
+        button_press(str(user_input.get()))
+        
         
 
     
@@ -148,18 +155,18 @@ def gui(dataframe):
     #DROPDOWN
     def drop_down(choices = np.sort(df['INSTNM'].unique())):
 
-        global var1
-        var1 = StringVar(root)
-        var1.set('None selected')
-        drop = OptionMenu(root,var1,*choices)
+        global drop_down_input
+        drop_down_input = StringVar(root)
+        drop_down_input.set('None selected')
+        drop = OptionMenu(root,drop_down_input,*choices)
         drop.grid(row=2,column=1)
 
     
     
     def drop_down_GO():
         """This function is for the GO button for dropdown"""
-        button_press(str(var1.get()))
-        set_uni(str(var1.get()))
+        set_uni(str(drop_down_input.get()))
+        button_press(str(drop_down_input.get()))
         remove_elements()
 
     drop_down()
@@ -170,13 +177,13 @@ def gui(dataframe):
     #
 
     choices2 = np.sort(df['State'].unique())
-    var2 = StringVar(root)
-    var2.set('State')
-    drop_filter_by_state = OptionMenu(root,var2,*choices2)
+    filter_by_state_input = StringVar(root)
+    filter_by_state_input.set('State')
+    drop_filter_by_state = OptionMenu(root,filter_by_state_input,*choices2)
     drop_filter_by_state.grid(row=3,column=1)
 
     def filter_by_state():
-        mask = df['State']==str(var2.get())
+        mask = df['State']==str(filter_by_state_input.get())
         filtered_list = np.sort(df[mask]['INSTNM'].unique())
         drop_down(choices=filtered_list)
         #filtered_df = filtered_df[mask]
@@ -190,13 +197,13 @@ def gui(dataframe):
     #
 
     choices3 = np.sort(df['Sector_desc'].unique())
-    var3 = StringVar(root)
-    var3.set('type')
-    drop_filter_by_type = OptionMenu(root,var3,*choices3)
+    filter_by_type_input = StringVar(root)
+    filter_by_type_input.set('type')
+    drop_filter_by_type = OptionMenu(root,filter_by_type_input,*choices3)
     drop_filter_by_type.grid(row=4,column=1)
 
     def filter_by_type():
-        mask = filtered_df['Sector_desc']==str(var3.get())
+        mask = filtered_df['Sector_desc']==str(filter_by_type_input.get())
         filtered_list = np.sort(filtered_df[mask]['INSTNM'].unique())
         drop_down(choices=filtered_list)
         #filtered_df = filtered_df[mask]
@@ -239,9 +246,13 @@ def get_branch():
 
 
 def start_user_interface(dataframe):
-    gui(dataframe)
+    try:
+        gui(dataframe)
+    except:
+        print "Error in GUI"
 
 #if __name__ == '__main__':
     #start_user_interface(pd.read_csv("data/oncampuscrime101112.csv"))
     #print get_branch()
+    #print get_uni()
     
