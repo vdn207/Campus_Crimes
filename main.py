@@ -25,7 +25,7 @@ def university_crime_explorer(dataframe):
 	branch_name = GUI.get_branch()
 
 	print "Details about %s (%s) is being generated. Please wait..." % (university_name, branch_name)
-	'''
+	
 	college_instance = handlers.college_details(dataframe, university_name, branch_name)
 	college_obj = coll.College(college_instance, crimes_obj)
 
@@ -36,9 +36,9 @@ def university_crime_explorer(dataframe):
 	pltparam = plotting.pltParam()
 	answers_obj = plots.Answers(crimes_obj, college_obj, pltparam, crime_per_student_without_average, crime_per_student_with_average, crimes_per_student_by_category)
 
-	#answers_obj.visualize_answer1()
+	answers_obj.visualize_answer1()
 	answers_obj.pieChart(crime_per_student_with_average)	
-	'''
+
 
 def university_comparer(dataframe):
 	'''Handles the functionalities of University Comparer feature'''
