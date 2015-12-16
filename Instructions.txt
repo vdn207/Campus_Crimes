@@ -36,6 +36,7 @@ TO RUN THE PROGRAM: python main.py 		#### Command on the terminal
 ### WARNING ###
 Sometimes, when this command is run, a huge line of warnings can appear. But, close the program and re-run it.
 
+IMPORTANT:ONLY ONE FEATURE CAN BE USED IN A SINGLE RUN OF THE SOFTWARE. TO REUSE ANY FEATURE, THE PROGRAM HAS TO BE RE-RUN.
 
 When the program is started, a simple GUI with four options will appear.
 	Option 1: University Crime Explorer
@@ -47,7 +48,7 @@ The user has to choose one of the four following options.
 
 Option 1: University Crime Explorer
 -----------------------------------
-This is an interface to choose a particular university of interest. There are 10,662 university campus details in the dataset.
+This is an interface to choose a particular university of interest. There are 10,615 university campus details in the dataset.
 
 INPUT: 
 	The input type for this interface is strictly text. The university name has to be entered without any spelling mistake. The case can be anything. But, there has to be only one space between the words in the university name. If an invalid input is entered by the user, the interface displays the appropriate message. When correct input is entered, the interface provides a dropdown to choose the branch of the university. 
@@ -91,6 +92,14 @@ INPUT:
 
 OUTPUT:
 	Two plots of the crime comparisons with respect to each category (State and Sector) is presented to the user.
+
+
+
+#############
+## OUTPUTS ##
+#############
+
+All the images of the queries are stored in the folder 'output'.
 
 
 SAMPLE INPUTS TO EXPLORE THE SOFTWARE
