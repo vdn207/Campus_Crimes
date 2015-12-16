@@ -5,11 +5,11 @@ Varun D N - vdn207@nyu.edu
 '''Contains functions that handle the different functionalities'''
 
 import handlers
-import GUI
 import plots
 import college as coll
 import plottingParameters as plotting
 import initial_gui as igui
+import simple_gui as GUI
 import GUI2
 import GUI3
 import GUI4
@@ -40,7 +40,7 @@ def university_crime_explorer(dataframe, crimes_obj, university_name, branch_nam
 		GUI.start_user_interface(dataframe)
 		university_name = GUI.get_uni()
 		branch_name = GUI.get_branch()
-		
+
 	print "Details about %s (%s) is being generated. Please wait..." % (university_name, branch_name)
 	
 	college_instance = handlers.college_details(dataframe, university_name, branch_name)
@@ -97,22 +97,26 @@ def crime_comparisons(dataframe, crimes_obj):
 def interface(dataframe, crimes_obj):
 	'''Run the interace every time for the user'''
 
-	igui.initial_gui()
-	user_feature_choice = igui.get_result()
+	try:
 
-	if user_feature_choice == 1:
-		university_name, branch_name, multibar_plot, pie_chart = university_crime_explorer(dataframe, crimes_obj, "", "", True)
-		plot1.plotting1(multibar_plot, pie_chart, university_name, branch_name)
+		igui.initial_gui()
+		user_feature_choice = igui.get_result()
 
-	elif user_feature_choice == 2:
-		multibar_plot_1, multibar_plot_2, pie_chart_1, pie_chart_2, university_name_1, branch_name_1, university_name_2, branch_name_2 = university_comparer(dataframe, crimes_obj)
-		plot2.plotting2(multibar_plot_1, multibar_plot_2, pie_chart_1, pie_chart_2, university_name_1, branch_name_1, university_name_2, branch_name_2)
+		if user_feature_choice == 1:
+			university_name, branch_name, multibar_plot, pie_chart = university_crime_explorer(dataframe, crimes_obj, "", "", True)
+			plot1.plotting1(multibar_plot, pie_chart, university_name, branch_name)
 
-	elif user_feature_choice == 3:
-		bar_chart, specific_choice = category_wise_crime(dataframe, crimes_obj)
-		plot3.plotting3(bar_chart, specific_choice)
+		elif user_feature_choice == 2:
+			multibar_plot_1, multibar_plot_2, pie_chart_1, pie_chart_2, university_name_1, branch_name_1, university_name_2, branch_name_2 = university_comparer(dataframe, crimes_obj)
+			plot2.plotting2(multibar_plot_1, multibar_plot_2, pie_chart_1, pie_chart_2, university_name_1, branch_name_1, university_name_2, branch_name_2)
 
-	else:
-		crime_1, crime_2, state_wide_output, sector_wide_output = crime_comparisons(dataframe, crimes_obj)
-		plot4.plotting4(state_wide_output, sector_wide_output, crime_1, crime_2)
+		elif user_feature_choice == 3:
+			bar_chart, specific_choice = category_wise_crime(dataframe, crimes_obj)
+			plot3.plotting3(bar_chart, specific_choice)
 
+		else:
+			crime_1, crime_2, state_wide_output, sector_wide_output = crime_comparisons(dataframe, crimes_obj)
+			plot4.plotting4(state_wide_output, sector_wide_output, crime_1, crime_2)
+
+	except KeyboardInterrupt:
+		interface(dataframe, crimes_obj)

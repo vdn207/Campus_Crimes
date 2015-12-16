@@ -16,4 +16,3 @@ if __name__ == '__main__':
 	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112_cleaned.csv")
 
 	func.interface(dataframe, crimes_obj)
-	

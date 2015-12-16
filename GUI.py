@@ -130,6 +130,8 @@ def gui(dataframe):
         button2.grid_remove()
         button3.grid_remove()
         button4.grid_remove()
+        drop_down_label.grid_remove()
+        main_drop_down.grid_remove()
         drop_filter_by_type.grid_remove()
         drop_filter_by_state.grid_remove()
 
@@ -162,9 +164,9 @@ def gui(dataframe):
 
     #The next 4 lines output a string
     var = StringVar()
-    label = Label(root,textvariable = var)#relief=RAISED
+    drop_down_label = Label(root,textvariable = var)#relief=RAISED
     var.set("OR pick from drop down : ")
-    label.grid(row=2,column=0)
+    drop_down_label.grid(row=2,column=0)
 
     #DROPDOWN
     def drop_down(choices = np.sort(df['INSTNM'].unique())):
@@ -172,8 +174,9 @@ def gui(dataframe):
         global drop_down_input
         drop_down_input = StringVar(root)
         drop_down_input.set('None selected')
-        drop = OptionMenu(root,drop_down_input,*choices)
-        drop.grid(row=2,column=1)
+        global main_drop_down
+        main_drop_down = OptionMenu(root,drop_down_input,*choices)
+        main_drop_down.grid(row=2,column=1)
 
     
     
