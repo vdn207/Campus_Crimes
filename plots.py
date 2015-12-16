@@ -17,7 +17,7 @@ from scipy.interpolate import interp1d
 import plottingParameters as p
 import random
 
-import MikeCustomException as cexcep
+import custom_exceptions as cexcep
 from collections import OrderedDict
 
 
@@ -123,7 +123,7 @@ class Answers:
 		
 		#set ticks and rotate text
 		try:
-			plt.xticks([ a + self.pltparam.width/2 for a in  x],[name for name in labels], rotation= 90, ha='right', fontsize = self.pltparam.getTickFontSize(numBars) ) 
+			plt.xticks([ a + self.pltparam.width/2 for a in  x],[self.crimeObj.get_full_name(name) for name in labels], rotation= 45, ha='right', fontsize = self.pltparam.getTickFontSize(numBars) ) 
 		except cexcep.WrongFormat as er:
 			print er
 	
@@ -160,14 +160,12 @@ class Answers:
 		
 		dataX = list(self.answer3[crime1].values*10000)
 		dataY = list(self.answer3[crime2].values*10000)
-		w = .3		
-		padding =.1
 		
 		plt.scatter(dataX,dataY)
 		
 		ax.set_xlabel(self.crimeObj.get_full_name(crime1) , fontsize=self.pltparam.fontsize)
 		ax.set_ylabel(self.crimeObj.get_full_name(crime2) , fontsize=self.pltparam.fontsize)
-		ax.set_title(crime1 + " vs. " + crime2 + " by State ", fontsize= 20 )
+		ax.set_title(crime1 + " vs. " + crime2 + " by "+ plot_category, fontsize= 20 )
 		ax.autoscale(tight=True)
 		
 		#labels

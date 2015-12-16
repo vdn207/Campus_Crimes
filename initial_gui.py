@@ -32,7 +32,7 @@ global result
 root = None
 
 class Window(Frame):
-
+	"""This class initializes the frame of the GUI and sets the title of the window"""
 	def __init__(self, parent):
 		Frame.__init__(self, parent, background="white")
 		self.parent = parent
@@ -50,6 +50,8 @@ class Window(Frame):
 
 
 def initial_gui():
+	"""This function launches the first GUI which presents the user with 4 buttons.
+		The button set a value of result which indicates which is the next GUI to be launched"""
 
 
 	global root
@@ -62,33 +64,33 @@ def initial_gui():
 
 	#The next 4 lines output a string
 	var = StringVar()
-	label = Label(root,textvariable = var,relief=RAISED)
-	var.set("Interactive GUI")
+	label = Label(root,textvariable = var,relief=RAISED,bd=0)
+	var.set("EXPLORE CRIMES IN AMERICAN UNIVERSITIES")
 	label.grid(row=0,columnspan=4,pady = 10)
 
 
 	#The next 4 lines output a string
 	var = StringVar()
-	label = Label(root,textvariable = var,relief=RAISED)
-	var.set("Click on any one of the following 3 functions to excecute :")
+	label = Label(root,textvariable = var,relief=RAISED,bd=0)
+	var.set("Click on any one of the following 4 options ")
 	label.grid(row=2,columnspan=4,pady = 10)
 
 
 	
 	#BUTTON
-	button1 = Button(text="See stats of 1 university", command=option1, fg="blue")
+	button1 = Button(text="Single University", command=option1, fg="blue")
 	button1.grid(row=3,column=1,pady = 10)
 
 	button2 = Button(text="Compare two universities", command=option2, fg="blue")
 	button2.grid(row=4,column=1,pady = 10)
 
-	button3 = Button(text="Veiw crimes by category", command=option3, fg="blue")
+	button3 = Button(text="View crimes by category", command=option3, fg="blue")
 	button3.grid(row=5,column=1,pady = 10)
 
-	button4 = Button(text="Compare stats of two crimes", command=option4, fg="blue")
+	button4 = Button(text="Compare two crimes", command=option4, fg="blue")
 	button4.grid(row=6,column=1,pady = 10)
 
-	quit_button =Button(text="QUIT", command=quit, fg="blue")
+	quit_button =Button(text="QUIT", command=quit, fg="black")
 	quit_button.grid(row=7,column=1,pady = 20)
 
 	app = Window(root)

@@ -115,6 +115,10 @@ def gui(dataframe):
     
     def branch_GO():
         """This function for what happens after GO is pressed after the branch is chosen"""
+        if str(branch_input.get()) == "None selected":
+            Error_message = Label(root, text="No drop down choice selected").grid()
+            return None
+        
         branch_name = str(branch_input.get())
         
         set_branch(branch_name)

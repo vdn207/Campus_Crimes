@@ -20,9 +20,15 @@ import numpy as np
 from PIL import Image, ImageTk
 import matplotlib.pyplot as plt
 
-University_name = ""
-branch_name = ""
+University_name1 = ""
+branch_name1 = ""
+University_name2= ""
+branch_name2 = ""
 
+
+
+Error_message1=None
+Error_message2=None
 
 class Window(Frame):
     """This class defines the frame of the gui and sets the title of the window"""
@@ -53,22 +59,20 @@ def gui(dataframe):
         root.destroy()
     
     
-    #The next 4 lines output a string
-    var = StringVar()
-    label = Label(root,textvariable = var,relief=RAISED)
-    var.set("Interactive GUI")
-    label.grid(row=0,columnspan=4)
+    #Title text
+    Title = Label(root, text="Exploring crimes of a single university",fg="black").grid(row=0,column=0, columnspan=10,pady=10)
+
 
     #These lines print text
-    L1 = Label(root, text="First University name :")
-    L1.grid(pady=10,row=1,sticky=W)
+    prompt1 = Label(root, text="First University name :")
+    prompt1.grid(pady=10,row=1,sticky=W)
     
     #Text box
     user_input1 = Entry(root,bd=3,selectforeground="yellow")
     user_input1.grid(row=1,column=1)
 
-    L2 = Label(root, text="Second University name :")
-    L2.grid(pady=10,row=2,sticky=W)
+    prompt2 = Label(root, text="Second University name :")
+    prompt2.grid(pady=10,row=2,sticky=W)
     
     #Text box
     user_input2 = Entry(root,bd=3,selectforeground="yellow")
@@ -83,15 +87,60 @@ def gui(dataframe):
 
     
     def button_press():
+        """This function for what happens after GO is pressed"""
+
         uni_1 = str(user_input1.get())
         uni_2 = str(user_input2.get())
-        """This function for what happens after GO is pressed"""
-        if len(uni_1)==0:
-            print "No input for university 1"
-            pass
-        if len(uni_2)==0:
-            print "No input for university 2"
-            pass
+
+        lower_case_universities = df['INSTNM'].values.tolist()
+        lower_case_universities = map(str.lower, lower_case_universities)
+
+        if not(Error_message1==None):
+            global Error_message1
+            Error_message1 = Label(root, text="working",fg="red").grid(row=1,column=5)
+            #Error_message1.grid_remove()
+        if not(Error_message2==None):
+            global Error_message2
+            Error_message2.grid_remove()
+
+        
+        if len(uni_1)==0: #Checks if nothing is typed into the text box
+            global Error_message1
+            Error_message1 = Label(root, text="No input detected!",fg="red").grid(row=1,column=5)
+            return None
+        
+        elif not(uni_1.lower() in lower_case_universities): #Checks if the university is a valid University
+            global Error_message1
+            Error_message1 = Label(root, text="University not found!",fg="red").grid(row=1,column=5)
+            return None
+
+        else:
+            if not(Error_message1==None):
+                global Error_message1
+                Error_message1 = ""
+                
+
+
+
+
+        if len(uni_2)==0: #Checks if nothing is typed into the text box
+            global Error_message2
+            Error_message2 = Label(root, text="No input detected!",fg="red").grid(row=2,column=5)
+            return None
+        
+        elif not(uni_2.lower() in lower_case_universities): #Checks if the university is a valid University
+            global Error_message2
+            Error_message2 = Label(root, text="University not found!",fg="red").grid(row=2,column=5)
+            return None
+        else:
+            if not(Error_message2==None):
+                Error_message2.grid_remove()
+
+        index_of_uni = lower_case_universities.index(uni_1.lower())
+        uni_1 = (df['INSTNM'].values)[index_of_uni]
+
+        index_of_uni = lower_case_universities.index(uni_2.lower())
+        uni_2 = (df['INSTNM'].values)[index_of_uni]
 
         set_uni1(uni_1)
         set_uni2(uni_2)
@@ -106,30 +155,34 @@ def gui(dataframe):
         
         #Text box
         choices1 = get_branches(uni_1)
-        global var4
-        var4 = StringVar(root)
-        var4.set('None selected')
-        drop1 = OptionMenu(root,var4,*choices1)
+        global branch1_input
+        branch1_input = StringVar(root)
+        branch1_input.set('None selected')
+        drop1 = OptionMenu(root,branch1_input,*choices1)
         drop1.grid(row=1,column=2)
 
         choices2 = get_branches(uni_2)
-        global var5
-        var5 = StringVar(root)
-        var5.set('None selected')
-        drop2 = OptionMenu(root,var5,*choices2)
+        global branch2_input
+        branch2_input = StringVar(root)
+        branch2_input.set('None selected')
+        drop2 = OptionMenu(root,branch2_input,*choices2)
         drop2.grid(row=2,column=2)
 
         #BUTTON
-    	button5 = Button(text="SEARCH", command=branch_GO, fg="blue")
-    	button5.grid(row=4,column =1,columnspan=2,padx=10)
+    	button5 = Button(text="SEARCH", command=branch_GO, fg="blue",width=10)
+    	button5.grid(row=4,column =1,columnspan=5,padx=10)
 
 
     
     def branch_GO():
         """This function for what happens after SEARCH is pressed after the branch is chosen"""
+        if (str(branch1_input.get()) == "None selected") or (str(branch2_input.get()) == "None selected"):
+            
+            return None
 
-        set_branch1(str(var4.get()))
-        set_branch2(str(var5.get()))
+        set_branch1(str(branch1_input.get()))
+        set_branch2(str(branch2_input.get()))
+
 
         quit()
 
@@ -137,22 +190,26 @@ def gui(dataframe):
     
 
     def remove_elements():
-        L1.grid_remove()
-        L2.grid_remove()
+        prompt1.grid_remove()
+        prompt2.grid_remove()
         user_input1.grid_remove()
         user_input2.grid_remove()
-        button1.grid_remove()
+        go_button.grid_remove()
+        if not(Error_message1==None):
+            Error_message1.grid_remove()
+        if not(Error_message2==None):
+            Error_message2.grid_remove()
 
 
     #BUTTON
-    button1 = Button(text="GO", command=button_press, fg="blue")
-    button1.grid(row=3,column =1,columnspan=2,padx=10)
+    go_button = Button(text="GO", command=button_press, fg="blue",width=5)
+    go_button.grid(row=3,column =1,columnspan=4,padx=10,pady=10)
     
 
     
-
+    #Quit button
     Quit_button = Button(root, text="Quit", command=quit)
-    Quit_button.grid(row=6,column =1)
+    Quit_button.grid(row=6,column =1,columnspan=15,pady=10)
 
     app = Window(root)
     root.mainloop()
@@ -196,10 +253,4 @@ def start_user_interface(dataframe):
     gui(dataframe)
     
 
-#if __name__ == '__main__':
-    #start_user_interface(pd.read_csv("data/oncampuscrime101112.csv"))
-    #print get_uni1()
-    #print get_uni2()
-    #print get_branch1()
-    #print get_branch2()
     

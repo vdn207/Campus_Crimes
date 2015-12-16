@@ -118,5 +118,5 @@ def interface(dataframe, crimes_obj):
 			crime_1, crime_2, state_wide_output, sector_wide_output = crime_comparisons(dataframe, crimes_obj)
 			plot4.plotting4(state_wide_output, sector_wide_output, crime_1, crime_2)
 
-	except KeyboardInterrupt:
-		interface(dataframe, crimes_obj)
+	except (NameError, KeyError):
+		print "Thanks for using!"

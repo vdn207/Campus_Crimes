@@ -44,16 +44,18 @@ class Window(Frame):
 def gui(dataframe):
 
 
-    df = dataframe#['BASIC']
+    df = dataframe['BASIC']
 
     root = Tk()
 
     def quit():
+        
         """Quits the GUI"""
         root.destroy()
+
     
     
-    #The next 4 lines output a string
+    #Title text
     Title = Label(root, text="Exploring crimes of a single university",fg="black").grid(row=0,column=0, columnspan=10,pady=10)
 
     #Text widget
@@ -69,29 +71,40 @@ def gui(dataframe):
 
     def get_branches(uni_name):
         """Returns a list of branches corresponding to a university"""
-        mask=df['INSTNM']==uni_name
+        mask = df['INSTNM']==uni_name
         subsetted_df = df[mask]
         return subsetted_df['BRANCH'].tolist()
 
     
     def button_press():
+        """This function for what happens after GO is pressed"""
         
 
-        uni_1 = str(user_input.get())
+        uni_1 = str(user_input.get()) # grabs the input of the text box
         
-        """This function for what happens after GO is pressed"""
-        if len(uni_1)==0:
+        
+        if len(uni_1)==0: #Checks if nothing is typed into the text box
             global Error_message
             Error_message = Label(root, text="No input detected!",fg="red").grid(row=1,column=5)
             return None
-        if not(uni_1 in df['INSTNM'].values):
+        
+        lower_case_universities = df['INSTNM'].values.tolist()
+        lower_case_universities = map(str.lower, lower_case_universities)
+        #print lower_case_universities
+        
+        
+        if not(uni_1.lower() in lower_case_universities): #Checks if the university is a valid University
             global Error_message
             Error_message = Label(root, text="University not found!",fg="red").grid(row=1,column=5)
             return None
 
-        set_uni(uni_1)
+        index_of_uni = lower_case_universities.index(uni_1.lower())
+        uni_1 = (df['INSTNM'].values)[index_of_uni]
 
-        remove_elements()
+
+        set_uni(uni_1) # Sets the university name as the input text
+
+        remove_elements() #removes certain GUI elements
 
         branch_prompt = Label(root, text="Pick a branch of {} : ".format(uni_1))
         branch_prompt.grid(pady=10,row=1,column=1)
@@ -123,6 +136,7 @@ def gui(dataframe):
     
 
     def remove_elements():
+        """Removes certain elements of the GUI, for aesthetic purposes"""
         Text_widget.grid_remove()
         user_input.grid_remove()
         GO_button.grid_remove()
@@ -130,13 +144,13 @@ def gui(dataframe):
             Error_message.grid_remove()
 
 
-    #BUTTON
+    # GO Button
     GO_button = Button(text="GO", command=button_press,width=10,fg="blue")
     GO_button.grid(row=3,column =1,columnspan=2,padx=10)
     
 
-    
 
+    # Quit Button
     Quit_button = Button(root, text="Quit", command=quit,width=10)
     Quit_button.grid(row=6,column =1, pady=20,columnspan=10)
 
@@ -165,12 +179,7 @@ def get_branch():
 
 def start_user_interface(dataframe):
     gui(dataframe),
-    
 
-if __name__ == '__main__':
-    start_user_interface(pd.read_csv("data/oncampuscrime101112.csv"))
-    print get_uni()
-    #print get_uni2(,)
-    print get_branch()
-    #print get_branch2()
+  
+
     

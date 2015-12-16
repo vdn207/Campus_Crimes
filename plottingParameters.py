@@ -10,7 +10,7 @@ import pandas as pd
 import colorsys
 from collections import OrderedDict
 from scipy.interpolate import interp1d
-import mikeCustomException as cexcep
+import custom_exceptions as cexcep
 
 
 class pltParam:
