@@ -213,7 +213,7 @@ class Answers:
 	
 	
 
-	def visualize_answer4(self, crime1 , crime2 ):
+	def visualize_answer4(self, crime1 , crime2, plot_category):
 		'''
 		Inputs are short names for two crimes
 		saves scatterplot of two crimes circles are states and returns name of image
@@ -254,7 +254,7 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		#add padding
 		plt.subplots_adjust(left=0.15,top=0.85)
 		plt.tight_layout()
-		plotName = "output/" + "scatter_"+crime1 + "by_" + crime2 + ".jpg"
+		plotName = "output/" + "scatter_"+crime1 + "_by_" + crime2 + "_" + plot_category + ".jpg"
 		
 		plt.savefig(plotName)
 		return plotName

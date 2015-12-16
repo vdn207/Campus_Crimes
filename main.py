@@ -16,19 +16,4 @@ if __name__ == '__main__':
 	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112_cleaned.csv")
 
 	func.interface(dataframe, crimes_obj)
-
-	'''
-	while True:
-		interface(dataframe)
-		try:
-			user_request = raw_input("Press 1 to go explore again or else type 'quit' to exit from the program: ")
-
-			if user_request == 'quit':
-				exit()
-			if user_request == '1':
-				continue
-
-		except KeyboardInterrupt:
-			continue 
-
-	'''	
+	

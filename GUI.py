@@ -139,7 +139,17 @@ def gui(dataframe):
     
     def text_GO():
         """This function is for the GO button for Text box input"""
-        set_uni(str(user_input.get()))
+        text_input = str(user_input.get())
+        
+        if len(text_input) == 0:
+            L1 = Label(root, text="No input detected!",fg="red").grid()
+            return None
+        if not(text_input in df['INSTNM'].values):
+            L1 = Label(root, text="University not found!",fg="red").grid()
+            return None
+
+        set_uni(text_input)
+
         remove_elements()
         button_press(str(user_input.get()))
         

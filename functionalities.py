@@ -16,7 +16,7 @@ import GUI4
 import plotting1 as plot1
 import plotting2 as plot2 
 import plotting3 as plot3
-#import plotting4 as plot4 
+import plotting4 as plot4 
 
 def get_university_crime_details_and_plot(dataframe, college_obj, crimes_obj):
 	'''Computes and generates the plots for the university'''
@@ -86,11 +86,13 @@ def crime_comparisons(dataframe, crimes_obj):
 	crimes_per_student_sector = handlers.average_crimes_per_student_by_category(dataframe, 'Sector_desc', crimes_obj, overall_average = True)
 
 	pltparam = plotting.pltParam()
-	answers_obj = plots.Answers(crimes_obj, None, pltparam, None, None, crimes_per_student_state)
-	answers_obj.visualize_answer4(crime_1, crime_2)
+	answers_obj_state = plots.Answers(crimes_obj, None, pltparam, None, None, crimes_per_student_state)
+	state_wide_output = answers_obj_state.visualize_answer4(crime_1, crime_2, 'State')
 
-	answers_obj = plots.Answers(crimes_obj, None, pltparam, None, None, crimes_per_student_sector)
-	answers_obj.visualize_answer4(crime_1, crime_2)
+	answers_obj_sector = plots.Answers(crimes_obj, None, pltparam, None, None, crimes_per_student_sector)
+	sector_wide_output = answers_obj_sector.visualize_answer4(crime_1, crime_2, 'Sector')
+
+	return crime_1, crime_2, state_wide_output, sector_wide_output
 
 def interface(dataframe, crimes_obj):
 	'''Run the interace every time for the user'''
@@ -111,5 +113,6 @@ def interface(dataframe, crimes_obj):
 		plot3.plotting3(bar_chart, specific_choice)
 
 	else:
-		crime_comparisons(dataframe, crimes_obj)
+		crime_1, crime_2, state_wide_output, sector_wide_output = crime_comparisons(dataframe, crimes_obj)
+		plot4.plotting4(state_wide_output, sector_wide_output, crime_1, crime_2)
 

@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 
 crime1 = ""
-crime2
+crime2 = ""
 
 
 class Window(Frame):
@@ -42,10 +42,10 @@ def plotting4(path1,path2,crime1_param,crime2_param):
     
     root = Tk()
     
-    global crime1_param
+    global crime1
     crime1 = crime1_param
 
-    global crime2_param
+    global crime2
     crime2 = crime2_param
 
     
