@@ -17,7 +17,7 @@ from scipy.interpolate import interp1d
 import plottingParameters as p
 import random
 
-import mikeCustomException as cexcep
+import MikeCustomException as cexcep
 from collections import OrderedDict
 
 
@@ -41,20 +41,16 @@ class Answers:
 		'''
 		input is a tuple, the first entry is a dictionary with the crime as a key and the rate as a value
 		'''
-		#crimeFrequency , crimeObject = self.answer1
-
 		plt.close("all")
-
 		ax = plt.subplot(111)		
-
-		x = np.array(range(1, len(self.crimes_list) + 1))
+		x = np.array(range(1, len(self.crimes_list) + 1)) #
 		
 		#seperate data by year instead of crime
 		y_10=[]
 		y_11=[]
 		y_12=[]
 	    
-		for crime in self.crimes_list:
+		for crime in self.crimes_list: 
 			y_10.append(self.answer1[crime][0]*10000)   #multiply by 10000 y-axis is per 10000
 			y_11.append(self.answer1[crime][1]*10000)
 			y_12.append(self.answer1[crime][2]*10000)
@@ -90,48 +86,14 @@ class Answers:
 			# attach some text labels
 			for rect in rects:
 				height = rect.get_height()
-				ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,
-				        '%.1f' % height,
-				        ha='center', va='bottom')
+				if height !=0:  # if no crime don't show the crime rate
+					ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,
+						    '%.1f' % height,
+						    ha='center', va='bottom')
 		plt.tight_layout()
 		plotName =str("output/" + self.collegeObj.get_college_name()[0]) + "_answer1" + ".png"
 		plt.savefig(plotName) 
 		return plotName
-
-
-
-	def visualize_answer2(self):
-		ax = plt.subplot(111)
-		w = .3		
-		padding =.1
-		fontsize=15
-
-		x = np.array(range(1, len(self.crimes_list) + 1))
-		rects = ax.bar(x, np.array(self.answer2.values())*10000, width = self.pltparam.width, align='center')
-		
-		#set ticks and rotate text
-		plt.xticks([ a + self.pltparam.width/2 for a in  x],[name for name in self.crimeNames], rotation= 30, ha='right') 
-
-		ax.set_xlabel('Particular Crime by Year ', fontsize=fontsize)
-		ax.set_ylabel('Crime Rate (per 10,000 students)', fontsize=fontsize)
-		ax.set_title(self.collegeObj.get_college_name() + " Crime  ", fontsize=fontsize)
-		ax.autoscale(tight=True)
-
-		#add padding
-		plt.subplots_adjust(left=0.15,top=0.85)
-		
-
-		#adjust limits of yaxis to make room for annointed text
-		maxData=max(np.array(self.answer2.values())*10000)
-		plt.ylim(0,maxData * 1.15)
-
-		for rect in rects:
-			height = rect.get_height()
-			ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,
-				    '%.1f' % height,
-				    ha='center', va='bottom')
-		plt.tight_layout()
-		plt.show()
 
 
 	def simpleBarChart(self,data, specificCategory):
@@ -179,39 +141,6 @@ class Answers:
 
 
 
-	def visualize_answer3(self):
-
-		plt.close("all")
-
-		ax = plt.subplot(111)
-		crimeOfInterest = 'BURGLA'
-		categories = self.answer3[crimeOfInterest].index.values
-		numberOfBars= len( categories)
-		
-		fontSizeFunction = interp1d([5,75],[20,5])  #pick mapping for size of font
-		fontsize= float( fontSizeFunction(numberOfBars) )
-		
-		w = .3		
-		padding =.1
-
-		x = np.array(range(1, numberOfBars +1))
-		rects = ax.bar(x, np.sort(self.answer3[crimeOfInterest].values*10000), width = w, align='center')
-		
-		#set ticks and rotate text
-		plt.xticks([ a + w/2 for a in  x],[name for name in categories], rotation= 90, ha='right', fontsize =fontsize) 
-		ax.set_xlabel('Particular Crime by Year ', fontsize=15)
-		ax.set_ylabel('Crime Rate (per 10,000 students)', fontsize=15)
-		ax.set_title(" Crime by " + str("State") , fontsize=15)
-		ax.autoscale(tight=True)
-
-		#add padding
-		#plt.subplots_adjust(left=0.15,top=0.85)
-		plt.tight_layout()
-		plotName = "output/" + str(self.collegeObj.get_college_name()[0]) + "_answer1" + ".png"
-		plt.savefig(plotName) 
-		return plotName
-	
-	
 
 	def visualize_answer4(self, crime1 , crime2, plot_category):
 		'''
@@ -221,14 +150,13 @@ class Answers:
 		plt.close("all")
 
 		ax = plt.subplot(111)
-		crimeOfInterest = 'FORCIB'
-		crimeOfInterest2 = 'BURGLA'
+		
 		labels = list(self.answer3[crime1].index.values)
 		numPoints= len( labels)
 		
-		fontSizeFunction = interp1d([5,75],[20,5])  #pick mapping for size of font
-		fontsize = 15		
-		fontsize= float( fontSizeFunction(numPoints) )
+		#fontSizeFunction = interp1d([5,75],[20,5])  #pick mapping for size of font
+		#fontsize = 15		
+		#fontsize= float( fontSizeFunction(numPoints) )
 		
 		dataX = list(self.answer3[crime1].values*10000)
 		dataY = list(self.answer3[crime2].values*10000)
@@ -237,16 +165,21 @@ class Answers:
 		
 		plt.scatter(dataX,dataY)
 		
-		ax.set_xlabel(self.crimeObj.get_full_name(crime1) , fontsize=15)
-		ax.set_ylabel(self.crimeObj.get_full_name(crime2) , fontsize=15)
-		ax.set_title(crime1 + " vs. " + crime2 + " by State ", fontsize=15)
+		ax.set_xlabel(self.crimeObj.get_full_name(crime1) , fontsize=self.pltparam.fontsize)
+		ax.set_ylabel(self.crimeObj.get_full_name(crime2) , fontsize=self.pltparam.fontsize)
+		ax.set_title(crime1 + " vs. " + crime2 + " by State ", fontsize= 20 )
 		ax.autoscale(tight=True)
 		
 		#labels
 		#http://stackoverflow.com/questions/5147112/matplotlib-how-to-put-individual-tags-for-a-scatter-plot
 		zippedData = zip(labels, dataX, dataY)
 		sortedByDistance = sorted(zippedData, key=lambda tup: tup[1]**2 +tup[2]**2 ,reverse=True)
-		numPointsToLabel =6
+		
+		#cases for if separated by state or sector
+		if numPoints>12:	#by state	
+			numPointsToLabel =12
+		numPointsToLabel = numPoints   #by sector
+		
 		for label, x, y in sortedByDistance[:numPointsToLabel]:
 			plt.annotate(label,xy = (x, y),xytext = (-5,5),textcoords = 'offset points',
 bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
@@ -254,8 +187,9 @@ bbox = dict(boxstyle = 'round,pad=0.5', fc = 'yellow', alpha = 0.5),  )
 		#add padding
 		plt.subplots_adjust(left=0.15,top=0.85)
 		plt.tight_layout()
-		plotName = "output/" + "scatter_"+crime1 + "_by_" + crime2 + "_" + plot_category + ".jpg"
 		
+		# saving image and returning string of file name
+		plotName = "output/" + "scatter_"+crime1 + "_by_" + crime2 + "_" + plot_category + ".jpg"
 		plt.savefig(plotName)
 		return plotName
 

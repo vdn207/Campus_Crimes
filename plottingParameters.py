@@ -35,17 +35,16 @@ class pltParam:
 			raise cexcep.WrongFormat("Input must be a integer")
 		
 		colors=[]
-		try:
-			for i in np.arange(0., 360., 360. / num_colors):   #possible problem when num_colors =0 
-				hue = i/360.
-				lightness = (50 + np.random.rand() * 10)/100.
-				saturation = (90 + np.random.rand() * 10)/100.
-				colors.append(colorsys.hls_to_rgb(hue, lightness, saturation))
-			return colors
-		
-		except ZeroDivisionError :
-			print "We don't have any crime record on this college on this campus."
+		if num_colors == 0:
+			raise ZeroDivisionError
 			return None
+		for i in np.arange(0., 360., 360. / num_colors):   #possible problem when num_colors =0 
+			hue = i/360.
+			lightness = (50 + np.random.rand() * 10)/100.
+			saturation = (90 + np.random.rand() * 10)/100.
+			colors.append(colorsys.hls_to_rgb(hue, lightness, saturation))
+		return colors
+		
 
 	def alternatingDictionary(self, unSortedDic):
 		'''
@@ -79,16 +78,25 @@ class pltParam:
 		input: int, output float
 		helper function for picking appropriate font size for graphs with ticks 
 		'''
-		if not isinstance(numTicks , int):  #if its not a series throw error
+		if not isinstance(numTicks , int) :  #if its not a series throw error
 			raise cexcep.WrongFormat("Input must be an int")
 			return None
-
-		if numTicks <15:
-			return 15
+		
+		if numTicks <1:
+			raise cexcep.WrongFormat("must be a positive Integer")
+			return None
 
 		maxFont = 15
 		minFont = 4
-		fontSizeFunction = interp1d([14,75],[maxFont,minFont])  #maps linearly range in [14,75] to [15,4]
+		minTexts= 15
+		maxTexts =75
+
+		if numTicks > maxTexts:
+			return minFont
+		if numTicks < minTexts:
+			return 20
+		
+		fontSizeFunction = interp1d([minTexts,maxTexts],[maxFont,minFont])  #maps linearly range in [14,75] to [15,4]
 		fontsize= float( fontSizeFunction(numTicks) )
 		return fontsize
 
@@ -109,25 +117,9 @@ class pltParam:
 			
 
 if __name__ == '__main__':
-	p = pltParam()
 
-	university_name= "Harvard University"
-
-	branch_name = "Main Campus"
-	dataframe, crimes_obj = handlers.data_initialization("data/oncampuscrime101112_cleaned.csv")
-	college_instance = handlers.college_details(dataframe, university_name, branch_name)
-	college_obj = coll.College(college_instance, crimes_obj)
-	crime_per_student_without_average = handlers.all_crimes_per_student_over_years(college_obj, crimes_obj) # Question 1
-	crime_per_student_with_average = handlers.all_crimes_per_student_over_years(college_obj, crimes_obj, average=True) # Question 2
-	crimes_per_student_by_category = handlers.average_crimes_per_student_by_category(dataframe, 'State', crimes_obj) # Question 3
-	pltparam = plotting.pltParam()
-	answers_obj = plots.Answers(crimes_obj, college_obj, pltparam, crime_per_student_without_average, crime_per_student_with_average, crimes_per_student_by_category)
-
-
-	d = handlers.average_crimes_per_student_by_category(dataframe, 'State' ,crimes_obj, overall_average = True)
+	pltparam = pltParam()
+	pltparam.alternatingDictionary("dog")
 	
 	
-
-	answers_obj.simpleBarChart(d,"MA")
-
 
