@@ -22,4 +22,4 @@ if __name__ == '__main__':
 		func.interface(dataframe, crimes_obj)
 
 	except (NameError, KeyError):
-		print "Thanks for using!"
+		print "Thanks for using the software"

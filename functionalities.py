@@ -41,6 +41,10 @@ def university_crime_explorer(dataframe, crimes_obj, university_name, branch_nam
 		university_name = GUI.get_uni()
 		branch_name = GUI.get_branch()
 
+	if len(university_name) == 0 or len(branch_name) == 0:
+		print "Thank you for using the software"
+		exit()
+
 	print "Details about %s (%s) is being generated. Please wait..." % (university_name, branch_name)
 	
 	college_instance = handlers.college_details(dataframe, university_name, branch_name)
@@ -48,7 +52,7 @@ def university_crime_explorer(dataframe, crimes_obj, university_name, branch_nam
 
 	multibar_plot, pie_chart = get_university_crime_details_and_plot(dataframe, college_obj, crimes_obj)
 	return university_name, branch_name, multibar_plot, pie_chart
-
+	
 def university_comparer(dataframe, crimes_obj):
 	'''Handles the functionalities of University Comparer feature'''
 
@@ -57,6 +61,10 @@ def university_comparer(dataframe, crimes_obj):
 	branch_name_1 = GUI2.get_branch1()
 	university_name_2 = GUI2.get_uni2()
 	branch_name_2 = GUI2.get_branch2()
+
+	if len(university_name_1) == 0 or len(branch_name_1) == 0:
+		print "Thank you for using the software"
+		exit()
 
 	university_name_1, branch_name_1, multibar_plot_1, pie_chart_1 = university_crime_explorer(dataframe, crimes_obj, university_name_1, branch_name_1, False)
 	university_name_2, branch_name_2, multibar_plot_2, pie_chart_2 = university_crime_explorer(dataframe, crimes_obj, university_name_2, branch_name_2, False)
@@ -68,6 +76,11 @@ def category_wise_crime(dataframe, crimes_obj):
 
 	GUI3.start_user_interface(dataframe)
 	category, specific_choice = GUI3.get_choices()
+
+	if len(category) == 0 or len(specific_choice) == 0:
+		print "Thank you for using the software"
+		exit()
+
 	crimes_per_student_by_category = handlers.average_crimes_per_student_by_category(dataframe, category, crimes_obj, overall_average = True)
 
 	pltparam = plotting.pltParam()
@@ -82,6 +95,11 @@ def crime_comparisons(dataframe, crimes_obj):
 
 	GUI4.start_user_interface()
 	crime_1, crime_2 = GUI4.get_crimes()
+
+	if len(crime_1) == 0:
+		print "Thank you for using the software"
+		exit()
+
 	crimes_per_student_state = handlers.average_crimes_per_student_by_category(dataframe, 'State', crimes_obj, overall_average = True)
 	crimes_per_student_sector = handlers.average_crimes_per_student_by_category(dataframe, 'Sector_desc', crimes_obj, overall_average = True)
 
@@ -105,6 +123,7 @@ def interface(dataframe, crimes_obj):
 		if user_feature_choice == 1:
 			university_name, branch_name, multibar_plot, pie_chart = university_crime_explorer(dataframe, crimes_obj, "", "", True)
 			plot1.plotting1(multibar_plot, pie_chart, university_name, branch_name)
+
 
 		elif user_feature_choice == 2:
 			multibar_plot_1, multibar_plot_2, pie_chart_1, pie_chart_2, university_name_1, branch_name_1, university_name_2, branch_name_2 = university_comparer(dataframe, crimes_obj)
